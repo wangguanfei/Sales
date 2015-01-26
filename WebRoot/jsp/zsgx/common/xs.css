@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+/** 导航定义 */
+.xs-nav{height: 30px;margin-left: 5px;}
+.xs-nav ul li{
+	line-height: 25px;
+	width: 150px;
+	/* 	background: #000; 
+	background:#F0F5F6; 
+	background:url('images/tabs-bg.gif') repeat-x;
+	*/
+	background: #1cF; 
+	overflow:hidden;
+	border:1px solid #CCC;
+	float: left;
+	text-align: center;
+}
+.xs-nav ul li a{width: 100px;line-height: 20px;}
+.xs-nav ul li a:link{color: #000;text-decoration:none;}
+.xs-nav ul li a:visited{color: #000;text-decoration:none;}
+.xs-nav ul li a:active{color: #000;text-decoration:none;}
+.xs-nav ul li a:hover{color: #000;text-decoration:none;}
+.xs-nav .on{background: #FFF;}
+
+/** 容器定义 */
+.xs-contaner { height: 400px; }
+.xs-contaner-cell {margin-right: 1%; margin-top: 5px;margin-bottom: 5px;}
+
+.xs-30{width: 32%;}
+.xs-50{width: 49%;}
+.xs-40{width: 39%;}
+.xs-60{width: 59%;}
+
+.xs-left { float: left;}
+.xs-right { float: right;}
+
+.xs-contaner-cell .xs-title{
+	background: #1cF;
+	border:1px solid #CCC;
+	height: 25px;
+	text-indent: 10px;
+	vertical-align: middle;
+}
+.xs-contaner-cell .xs-content{
+	background: #FFF;
+	border:1px solid #CCC;
+	text-indent: 10px;
+	height: 100%;
+}

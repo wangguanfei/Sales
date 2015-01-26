@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="basis" version="2.5">
+	<display-name>basis</display-name>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>basis.root</param-value>
+	</context-param>
+<!-- 设置服务器中当前WebRoot的物理路径 -->
+    <listener>
+        <listener-class>
+            com.basis.core.listener.WebAppRootKeyListener
+        </listener-class>
+    </listener>
+	<!-- Spring配置文件  -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath*:/config/core/spring/applicationContext.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<!-- 设置servlet编码  -->
+	<filter>
+		<filter-name>Set Character Encoding</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Set Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>openSession</filter-name>
+		<filter-class>
+			org.springframework.orm.hibernate4.support.OpenSessionInViewFilter
+		</filter-class>
+		<init-param>
+			<param-name>flushMode</param-name>
+			<param-value>AUTO</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>openSession</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>openSession</filter-name>
+		<url-pattern>/rest/*</url-pattern>
+	</filter-mapping>
+	<!-- struts2 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+
+		<filter-class>
+			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+		</filter-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				struts-default.xml, struts-plugin.xml,
+				config/web/struts/struts.xml
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>loggerFactory</param-name>
+			<param-value>
+				com.opensymphony.xwork2.util.logging.commons.CommonsLoggerFactory
+			</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+	<!-- fckeditor servlet-->
+	<servlet>
+		<servlet-name>Connector</servlet-name>
+		<servlet-class>
+			net.fckeditor.connector.ConnectorServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Connector</servlet-name>
+		<url-pattern>
+			/fckeditor/editor/filemanager/connectors/*
+		</url-pattern>
+	</servlet-mapping>
+	<!-- cxf servlet -->
+	<servlet>
+		<servlet-name>CXFService</servlet-name>
+		<servlet-class>
+			org.apache.cxf.transport.servlet.CXFServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFService</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 配置异常页面 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/jsp/common/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>505</error-code>
+		<location>/jsp/common/505.jsp</location>
+	</error-page>
+<!-- 验证码 start -->
+	<servlet>
+		<servlet-name>Kaptcha</servlet-name>
+		<servlet-class>
+			com.google.code.kaptcha.servlet.KaptchaServlet
+		</servlet-class>
+		<!--
+			For a complete list of Init Parameters, please see:
+			http://code.google.com/p/kaptcha/wiki/ConfigParameters
+		-->
+		<init-param>
+			<param-name>kaptcha.border</param-name>
+			<param-value>yes</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.font.color</param-name>
+			<param-value>black</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.space</param-name>
+			<param-value>5</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.noise.color</param-name>
+			<param-value>black</param-value>
+		</init-param>
+		<init-param>
+			<param-name>kaptcha.textproducer.char.length</param-name>
+			<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Kaptcha</servlet-name>
+		<url-pattern>/kaptcha.jpg</url-pattern>
+	</servlet-mapping>
+	<!-- 验证码 end -->
+</web-app>

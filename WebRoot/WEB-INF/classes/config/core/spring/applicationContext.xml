@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+			http://www.springframework.org/schema/task
+			http://www.springframework.org/schema/task/spring-task-3.1.xsd
+			http://www.springframework.org/schema/tx
+			http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
+	default-autowire="byName" default-lazy-init="true">
+	
+  	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+       <property name="locations">  
+           <list>  
+               <value>classpath:/datasource.properties</value>
+           </list>  
+       </property>  
+   </bean>
+   
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="minPoolSize" value="1"></property>
+		<property name="maxPoolSize" value="20"></property>
+		<property name="maxIdleTime" value="120000"></property>
+		<property name="acquireIncrement" value="2"></property>
+		<property name="maxStatements" value="0"></property>
+		<property name="initialPoolSize" value="2"></property>
+		<property name="idleConnectionTestPeriod" value="60"></property>
+		<property name="acquireRetryAttempts" value="30"></property>
+		<property name="breakAfterAcquireFailure" value="false"></property>
+		<property name="testConnectionOnCheckout" value="false"></property>
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<!--支持位运算&  配置自定义方言 继承自org.hibernate.dialect.MySQLInnoDBDialect -->
+				<prop key="hibernate.dialect">com.basis.core.expand.hibernate.ExpandMySQLInnoDBDialect</prop>
+				<!-- 是否根据需要每次自动创建数据库 -->
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<!-- 显示Hibernate持久化操作所生成的SQL -->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 将SQL脚本进行格式化后再输出 -->
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache" >false</prop>
+        		<prop key="hibernate.cache.use_query_cache" >false</prop>
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+				<prop key="connection.autoReconnect">true</prop>  
+        		<prop key="connection.autoReconnectForPools">true</prop> 
+        		<prop key="connection.is-connection-validation-required">true</prop> 
+			</props>
+		</property>
+		<!-- 映射文件-->
+		<property name="mappingJarLocations">
+            <list>
+                <value>classpath*:WEB-INF/lib/basis-*-core-*.jar</value>
+            </list>
+        </property>
+        <property name="mappingLocations">
+		    <list>
+		     <value>
+		     classpath*:config/*/spring/hbm/*.hbm.xml
+		     </value>
+		    </list>
+		</property>
+		 
+		 <!-- 
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>/config/core/spring/hbm/</value>
+			</list>
+		</property> 
+		 -->
+	</bean>
+
+<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		abstract="false" lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<!-- 事务管理配置 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" rollback-for="Exception"  propagation="REQUIRED"/>
+			<tx:method name="modify*" rollback-for="Exception"  propagation="REQUIRED"/>
+			<tx:method name="remove*" rollback-for="Exception"  propagation="REQUIRED"/>
+			<tx:method name="query*"  propagation="REQUIRED" read-only="true"/>
+			<tx:method name="*" propagation="REQUIRED" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config proxy-target-class="true">
+		<aop:advisor pointcut="execution(* com.basis.*.service.impl.*.add*(..))||execution(* com.basis.*.service.impl.*.modify*(..))||execution(* com.basis.*.service.impl.*.remove*(..))||execution(* com.basis.*.service.impl.*.query*(..))" advice-ref="txAdvice" />
+	</aop:config>
+
+	<!-- 全局dao -->
+	<bean id="dao" class="com.basis.core.dao.BaseDaoImpl" />
+	
+	<import resource="classpath*:/config/core/spring/serviceContext.xml"/>
+	
+
+	
+	<!-- 定时器 
+	<task:scheduled-tasks>
+		<task:scheduled ref="projectService" method="modifyPublishByTask" cron="0 0 1 * * ?" />
+	</task:scheduled-tasks>
+	定时器 -->
+</beans>

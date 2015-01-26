@@ -1,0 +1,71 @@
+/* CSS Document */
+
+/*-------------------------------   初始化样式     ----------------------------------*/
+
+body{padding:0; margin:0; background:#fff;}
+
+*{ padding:0; margin:0; font-size:12px; font-family:"微软雅黑","Arial"; color:#777;}
+img{ border:none; vertical-align:middle;}
+ul,ol,li{ list-style:none;}
+table{}
+dt dl dd{ padding:0; margin:0; line-height:100%;}
+/*-------------------------------   字体样式     ----------------------------------*/
+.bold{ font-weight:bold;}
+.ft14{ font-size:14px;}
+.black{ color:#000}
+.gray{ color:#999}
+.red{ color:#ff000; text-decoration:none}
+a.redlink{ color:#C00; text-decoration:none;}
+a.redlink:hover{ color:#C00; text-decoration:underline;}
+a.redlink{ color:#C00; text-decoration:none;}
+a.redlink:hover{ color:#C00; text-decoration:underline;}
+a:active {outline:none;blr:expression_r(this.onFocus=this.blur());}
+
+/*-------------------------------   全局布局     ----------------------------------*/
+.left{ float:left;}
+.right{ float:right;}
+.clear{ clear:both;}
+.clearfix{zoom:1;}  
+.clearfix:after{content:'.';display:block;visibility:hidden;clear:both;height:0px;}  
+/*公用样式*/
+.mt5{ margin-top:5px;}
+.mt10{ margin-top:10px;}
+.ml10{margin-left:10px; display:inline;}
+.ml20{margin-left:20px;}
+.mr10{margin-right:10px; display:inline;}
+.mr15{margin-right:15px;}
+.ml15{margin-left:15px; display:inline;}
+.ml30{margin-left:30px;}
+.ml40{margin-left:40px;}
+.mt15{ margin-top:15px;}
+.mt20{ margin-top:20px;}
+.mb10{ margin-bottom:10px;}
+.mb30{ margin-bottom:30px;}
+.pt10{ padding-top:10px;}
+.pb10{ padding-bottom:10px;}
+.pl20{ padding-left:20px;}
+.pl30{ padding-left:30px;}
+.pr15{ padding-right:15px;}
+.pl15{ padding-left:15px;}
+.pt5{ padding-top:5px;}
+.pr5{ padding-right:5px;}
+.pl5{ padding-left:5px;}
+
+.pt4{ padding-top:4px;}
+.pl10{padding-left:10px;}
+.pr10{padding-right:10px;}
+.blank_10{height:10px; overflow:hidden;}
+.blank_5{height:5px; overflow:hidden;}
+.blank_30{height:30px; overflow:hidden;}
+.textCenter{text-align:center;}
+.textright{ text-align:right;}
+.tindent{ text-indent:2em;}
+.over{ overflow:hidden;}
+.blod{ font-weight:bold;}
+.blank_60{height:60px; overflow:hidden;}
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 权限 -->
+	<package name="permission" namespace="/permission" extends="default">
+		<action name="employee" class="com.basis.web.action.EmployeeAction">
+			<result name="employee-index">/jsp/permission/employee-index.jsp</result>
+			<result name="employee-add">/jsp/permission/employee-add.jsp</result>
+			<result name="employee-edit">/jsp/permission/employee-edit.jsp</result>
+			<result name="employee-detail">/jsp/permission/employee-detail.jsp</result>
+			<result name="employee-reset-password">/jsp/permission/employee-reset-password.jsp</result>
+		</action>
+		<action name="role" class="com.basis.web.action.RoleAction">
+			<result name="role-index">/jsp/permission/role-index.jsp</result>
+			<result name="role-add">/jsp/permission/role-add.jsp</result>
+			<result name="role-edit">/jsp/permission/role-edit.jsp</result>
+		</action>
+		<action name="roletemplate" class="com.basis.web.action.RoletemplateAction">
+			<result name="roletemplate-index">/jsp/permission/roletemplate-index.jsp</result>
+			<result name="roletemplate-add">/jsp/permission/roletemplate-add.jsp</result>
+			<result name="roletemplate-edit">/jsp/permission/roletemplate-edit.jsp</result>
+		</action>
+		<action name="menu" class="com.basis.web.action.MenuAction">
+		</action>
+	</package>
+</struts>

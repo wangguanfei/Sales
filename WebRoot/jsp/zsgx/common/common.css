@@ -1,0 +1,24 @@
+﻿@CHARSET "UTF-8";
+/** 导航定义 */
+.conTitle{text-align:center; line-height:30px; font-size:18px; font-weight:bold;}
+/* CSS Document */
+body{margin:0; padding:0; font-size:12px; color:#000; font-family:"SimSun";}
+h1,h2,h3,h4,h5,ul,li,ol,dl,dt,dd,p,img,table,tr,td,button,a{margin:0; padding:0; list-style:none; outline:none; border:0;}
+a:link,a:visited{text-decoration:none;}
+img{display:block;}
+em{font-style:normal;}
+.switch{width:80%;  border-top:0; margin:50px auto;}
+.swiHd{height:28px;}
+.swiHd span{width:150px; height:28px; float:left; line-height:28px; background:url("/image/whiteLine.png") no-repeat right center #2a5d9f; display:inline-block; font-size:14px; text-align:center; cursor:pointer; color:#fff;}
+.swiHd .current{height:32px; color:#2a5d9f; font-weight:bold; margin-top:-5px; line-height:35px; background:#f2f2f2; border:1px solid #2a5d9f; border-bottom:0;}
+.swiBd{padding:10px; border:1px solid #2a5d9f; background:#f8fafd; margin-top:-1px;}
+.swiBd .newOut{display:none;}
+.swiBd .facing{display:block; min-height:300px;}
+/** 按钮 */
+.common_but{display:inline-block; width:70px; height:25px; margin:6px 3px; line-height:25px; text-align:center; color:#000; background:url(/image/btnBg.png) no-repeat;}
+.common_but:hover{background-position:0 -40px;cursor: pointer;}
+/*2014-5-26
+.input-text{border:none; width:100%;}
+.l-form li{width:100%;}
+#fieldName{border:none; width:30%;}
+*/

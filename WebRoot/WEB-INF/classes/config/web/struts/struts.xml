@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.locale" value="zh_CN" />    
+<constant name="struts.i18n.encoding" value="UTF-8"/>  
+<constant name="struts.devMode" value="true" />  
+
+	<package name="default" namespace="/" extends="json-default">
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.basis.web.interceptor.LoginInterceptor"/>
+			<interceptor name="authorityInterceptor" class="com.basis.web.interceptor.AuthorityInterceptor" />
+			<interceptor name="dataFilterInterceptor" class="com.basis.web.interceptor.DataFilterInterceptor"/>
+			<interceptor-stack name="mystack">
+				<!-- 自定义拦截器 -->
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="authorityInterceptor" />
+				<interceptor-ref name="dataFilterInterceptor" />
+				
+				<!-- struts 拦截器 -->
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mystack" />
+		<global-results>
+			<result name="noauthority">/jsp/common/noauthority.jsp</result><!-- 无权限 -->
+			<result name="nologin">/jsp/common/nologin.jsp</result><!-- 没有登录 -->
+			<result name="json-result" type="json"><param name="root">result</param></result>
+			<result name="json-page" type="json"><param name="root">page</param></result>
+			<result name="json-list" type="json"><param name="root">list</param></result>
+			<result name="json-parentMap" type="json"><param name="root">parentMap</param></result>
+			<result name="error" type="dispatcher"><param name="location">/jsp/common/error.jsp</param></result>
+			<result name="message">/jsp/common/message.jsp</result>
+		    <result name="file-download" type="stream">
+                 <param name="contentType">application/octet-stream</param>
+                 <param name="inputName">inputStream</param>
+                 <param name="contentDisposition">attachment;filename=${fileName}</param>
+                 <param name="bufferSize">4096</param>
+            </result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping name="exception" exception="java.lang.Exception" result="error" />
+		</global-exception-mappings>
+	</package>
+	<!-- include xml file -->
+	<include file="config/web/struts/action/struts-login-actions.xml"/>
+	<include file="config/web/struts/action/struts-permission-actions.xml"/>
+	<include file="config/web/struts/action/struts-file-actions.xml"/>
+	<include file="config/web/struts/action/struts-zsgx-actions.xml"/>
+</struts>
