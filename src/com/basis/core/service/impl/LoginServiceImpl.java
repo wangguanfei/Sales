@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import com.basis.core.common.Result;
 import com.basis.core.condition.EmployeeCondition;
 import com.basis.core.constants.EEmployeeState;
-import com.basis.core.constants.EState;
 import com.basis.core.dao.IBaseDao;
 import com.basis.core.domain.Employee;
 import com.basis.core.exception.ParamIsNullException;

@@ -58,6 +58,8 @@ public class SalesRecordCondition  extends Condition{
 		/** 备注*/
 		private java.lang.String remain;
 		
+		/** 客户*/
+		private java.lang.Long customerId;
 		//columns END
 		public java.lang.Long getGoodsId() {
 			return this.goodsId;
@@ -145,6 +147,15 @@ public class SalesRecordCondition  extends Condition{
 		public void setProfit(java.math.BigDecimal profit) {
 			this.profit = profit;
 		}
+		
+
+	   public java.lang.Long getCustomerId() {
+			return customerId;
+		}
+
+		public void setCustomerId(java.lang.Long customerId) {
+			this.customerId = customerId;
+		}
 
 	@Override
 	public String getInitialHql() {
@@ -184,6 +195,9 @@ public class SalesRecordCondition  extends Condition{
 	        }
 			if(profit != null) {
 	            buffer.append(" and  t.profit = :profit ");
+	        }
+			if(customerId != null) {
+	            buffer.append(" and  t.customerId = :customerId ");
 	        }
 	        if(StringUtils.isNotBlank(remain)) {
 	            buffer.append(" and  t.remain = :remain ");
@@ -228,6 +242,9 @@ public class SalesRecordCondition  extends Condition{
 					if(profit!=null) {
 						query.setParameter("profit", profit);
 					}
+					if(customerId != null) {
+						query.setParameter("customerId", customerId);
+			        }
 					if(StringUtils.isNotBlank(remain)) {
 						query.setParameter("remain", remain);
 					}

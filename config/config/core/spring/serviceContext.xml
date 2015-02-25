@@ -20,4 +20,5 @@
 	<bean id="goodsService" class="com.basis.core.service.impl.GoodsServiceImpl"></bean>
 	<bean id="purchaseRecordService" class="com.basis.core.service.impl.PurchaseRecordServiceImpl"></bean>
 	<bean id="salesRecordService" class="com.basis.core.service.impl.SalesRecordServiceImpl"></bean>
+	<bean id="customerService" class="com.basis.core.service.impl.CustomerServiceImpl"></bean>
 </beans>

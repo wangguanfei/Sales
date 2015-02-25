@@ -1,7 +1,6 @@
 package com.basis.core.util;
 
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +12,6 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
-import com.sun.xml.internal.ws.util.UtilException;
 
 /**
  * @author wxliu
@@ -442,7 +440,7 @@ public class DateUtil {
 			try {
 				nowDate = dd.parse(someDate);
 			} catch (ParseException e) {
-				throw new UtilException(e);
+				
 			}
 
 			// Date nowDate = someDate;

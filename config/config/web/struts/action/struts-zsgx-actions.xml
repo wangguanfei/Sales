@@ -24,5 +24,11 @@
 			<result name="salesRecord-edit">/jsp/zsgx/salesRecord/edit.jsp</result>
 			<result name="goods-sales">/jsp/zsgx/salesRecord/sales.jsp</result>
 		</action>
+				<!-- 客户信息 -->
+		<action name="customer" class="com.basis.web.action.CustomerAction">
+			<result name="customer-index">/jsp/zsgx/customer/index.jsp</result>
+			<result name="customer-add">/jsp/zsgx/customer/add.jsp</result>
+			<result name="customer-edit">/jsp/zsgx/customer/edit.jsp</result>
+		</action>
 	</package>
 </struts>

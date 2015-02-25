@@ -66,5 +66,11 @@
                 <comment>备注</comment>
             </column>
         </property>
+        
+         <property name="customerId" type="java.lang.Long">
+            <column name="customer_id">
+                <comment>客户</comment>
+            </column>
+        </property>
 	</class>
 </hibernate-mapping>

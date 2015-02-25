@@ -63,6 +63,9 @@ public class SalesRecord implements java.io.Serializable{
 	/** 备注*/
 	private java.lang.String remain;
 	
+	/** 客户*/
+	private java.lang.Long customerId;
+	
 	//columns END
 
 
@@ -180,6 +183,14 @@ public class SalesRecord implements java.io.Serializable{
 
 	public void setProfit(java.math.BigDecimal profit) {
 		this.profit = profit;
+	}
+	
+	public java.lang.Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(java.lang.Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public String toString() {
