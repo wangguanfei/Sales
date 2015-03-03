@@ -24,7 +24,12 @@ $(function() {
 					display : "客户姓名",
 					name : "customerId",
 					render : function(item) {
-						return item.customer.name;
+						if(item.customer != null){
+							return item.customer.name;
+						}else{
+							return "";
+						}
+						
 					}
 				},
 				{

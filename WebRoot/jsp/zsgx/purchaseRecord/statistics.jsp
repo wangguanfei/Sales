@@ -130,7 +130,7 @@
 				   <input  type="text"  name="year"  onFocus="WdatePicker({isShowWeek:'true',dateFmt:'yyyy'})"  class="Wdate search-input-text" id="year" value="${year}" />
 				   </li>
 			<!-- search btn -->
-		   	<li><a c`lass="l-button" onclick="purchaseRecord_search()">查询</a></li>
+		   	<li><a class="l-button" onclick="purchaseRecord_search()">查询</a></li>
 		   </ul>
 		</form>
 		 <ul>
