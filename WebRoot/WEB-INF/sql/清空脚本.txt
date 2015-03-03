@@ -1,0 +1,5 @@
+TRUNCATE TABLE `zsgx_customer`;
+TRUNCATE TABLE `zsgx_goods`;
+TRUNCATE TABLE `zsgx_purchase_record`;
+TRUNCATE TABLE `zsgx_sales_record`;
+TRUNCATE TABLE `zsgx_statistics`;

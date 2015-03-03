@@ -41,7 +41,7 @@ public class CustomerCondition  extends Condition{
 		private java.lang.String qq;
 		
 		/** 消费金额*/
-		private java.lang.Float totalSpend;
+		private java.math.BigDecimal totalSpend;
 		
 		/** 备注*/
 		private java.lang.String remain;
@@ -87,14 +87,14 @@ public class CustomerCondition  extends Condition{
 			this.qq = value;
 		}
 		
-		public java.lang.Float getTotalSpend() {
-			return this.totalSpend;
+		public java.math.BigDecimal getTotalSpend() {
+			return totalSpend;
 		}
-		
-		public void setTotalSpend(java.lang.Float value) {
-			this.totalSpend = value;
+
+		public void setTotalSpend(java.math.BigDecimal totalSpend) {
+			this.totalSpend = totalSpend;
 		}
-		
+
 		public java.lang.String getRemain() {
 			return this.remain;
 		}
@@ -115,7 +115,7 @@ public class CustomerCondition  extends Condition{
 	            buffer.append(" and  t.id = :id ");
 	        }
 	        if(StringUtils.isNotBlank(name)) {
-	            buffer.append(" and  t.name = :name ");
+	            buffer.append(" and  t.name like :name ");
 	        }
 			if(sex != null) {
 	            buffer.append(" and  t.sex = :sex ");
@@ -146,7 +146,7 @@ public class CustomerCondition  extends Condition{
 						query.setParameter("id", id);
 					}
 					if(StringUtils.isNotBlank(name)) {
-						query.setParameter("name", name);
+						query.setParameter("name", "%"+name+"%");
 					}
 					if(sex!=null) {
 						query.setParameter("sex", sex);

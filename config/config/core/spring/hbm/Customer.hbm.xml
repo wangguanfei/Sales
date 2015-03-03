@@ -36,7 +36,7 @@
                 <comment>客户QQ</comment>
             </column>
         </property>
-		 <property name="totalSpend" type="java.lang.Float">
+		 <property name="totalSpend" type="java.math.BigDecimal">
             <column name="total_spend">
                 <comment>消费金额</comment>
             </column>

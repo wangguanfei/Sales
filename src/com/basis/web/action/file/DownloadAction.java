@@ -48,7 +48,7 @@ public class DownloadAction extends BaseAction {
 	public String fromLocal(){
 		String projectRoot=this.getServletRequest().getSession().getServletContext().getRealPath("/");
 		if (isDelete == 1) {
-			return exportDownLoad(projectRoot+file);//导出后下载
+			return exportDownLoad(file);//导出后下载
 		}
 		return download(projectRoot+file);
 	}
@@ -133,7 +133,7 @@ public class DownloadAction extends BaseAction {
 				os.flush();
 				is.close();
 				os.close();
-				 FileUtils.deleteFile(filePath);
+				FileUtils.deleteFile(filePath);
 			}else{
 				addActionMessage("你访问的资源不存在!");
 				return "message";

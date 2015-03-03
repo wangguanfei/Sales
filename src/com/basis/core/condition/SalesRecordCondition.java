@@ -38,10 +38,12 @@ public class SalesRecordCondition  extends Condition{
 		private java.math.BigDecimal purchasePrice;
 		
 		/** 销售时间*/
-		private java.util.Date salesDate;
-		
-		/** 销售年份*/
+		private java.lang.Long salesDate;
+		private java.lang.Long salesDateBeagin;
+		private java.lang.Long salesDateEnd;
 		private java.lang.String salesYear;
+		private java.lang.String salesDateBeaginStr;
+		private java.lang.String salesDateEndStr;
 		
 		/** 销售月份*/
 		private java.lang.String salesMonth;
@@ -77,14 +79,14 @@ public class SalesRecordCondition  extends Condition{
 			this.salesNumber = value;
 		}
 		
-		public java.util.Date getSalesDate() {
-			return this.salesDate;
+		public java.lang.Long getSalesDate() {
+			return salesDate;
 		}
-		
-		public void setSalesDate(java.util.Date value) {
-			this.salesDate = value;
+
+		public void setSalesDate(java.lang.Long salesDate) {
+			this.salesDate = salesDate;
 		}
-		
+
 		public java.lang.String getSalesYear() {
 			return this.salesYear;
 		}
@@ -148,13 +150,44 @@ public class SalesRecordCondition  extends Condition{
 			this.profit = profit;
 		}
 		
-
-	   public java.lang.Long getCustomerId() {
+     	public java.lang.Long getCustomerId() {
 			return customerId;
 		}
 
 		public void setCustomerId(java.lang.Long customerId) {
 			this.customerId = customerId;
+		}
+		
+	   public java.lang.Long getSalesDateBeagin() {
+			return salesDateBeagin;
+		}
+
+		public void setSalesDateBeagin(java.lang.Long salesDateBeagin) {
+			this.salesDateBeagin = salesDateBeagin;
+		}
+
+		public java.lang.Long getSalesDateEnd() {
+			return salesDateEnd;
+		}
+
+		public void setSalesDateEnd(java.lang.Long salesDateEnd) {
+			this.salesDateEnd = salesDateEnd;
+		}
+
+    	public java.lang.String getSalesDateBeaginStr() {
+			return salesDateBeaginStr;
+		}
+
+		public void setSalesDateBeaginStr(java.lang.String salesDateBeaginStr) {
+			this.salesDateBeaginStr = salesDateBeaginStr;
+		}
+
+		public java.lang.String getSalesDateEndStr() {
+			return salesDateEndStr;
+		}
+
+		public void setSalesDateEndStr(java.lang.String salesDateEndStr) {
+			this.salesDateEndStr = salesDateEndStr;
 		}
 
 	@Override
@@ -178,8 +211,11 @@ public class SalesRecordCondition  extends Condition{
 			if(purchasePrice != null) {
 	            buffer.append(" and  t.purchasePrice = :purchasePrice ");
 	        }
-			if(salesDate != null) {
-	            buffer.append(" and  t.salesDate = :salesDate ");
+			if(salesDateBeagin != null) {
+	            buffer.append(" and  t.salesDate >= :salesDateBeagin ");
+	        }
+			if(salesDateEnd != null) {
+	            buffer.append(" and  t.salesDate <= :salesDateEnd ");
 	        }
 	        if(StringUtils.isNotBlank(salesYear)) {
 	            buffer.append(" and  t.salesYear = :salesYear ");
@@ -227,6 +263,12 @@ public class SalesRecordCondition  extends Condition{
 					if(salesDate!=null) {
 						query.setParameter("salesDate", salesDate);
 					}
+					if(salesDateBeagin != null) {
+						query.setParameter("salesDateBeagin", salesDateBeagin);
+			        }
+					if(salesDateEnd != null) {
+						query.setParameter("salesDateEnd", salesDateEnd);
+			        }
 					if(StringUtils.isNotBlank(salesYear)) {
 						query.setParameter("salesYear", salesYear);
 					}

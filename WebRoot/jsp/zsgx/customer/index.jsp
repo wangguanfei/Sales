@@ -20,18 +20,10 @@
 			   <li>
 				   <label>客户姓名：</label>
 				   <input id="customerCondition.name" class="search-input-text" name="customerCondition.name" value="${customerCondition.name}" />
-				   <label>客户性别：</label>
-				   <input id="customerCondition.sex" class="search-input-text" name="customerCondition.sex" value="${customerCondition.sex}" />
 				   <label>客户电话：</label>
 				   <input id="customerCondition.phone" class="search-input-text" name="customerCondition.phone" value="${customerCondition.phone}" />
-				   <label>客户地址：</label>
-				   <input id="customerCondition.address" class="search-input-text" name="customerCondition.address" value="${customerCondition.address}" />
 				   <label>客户QQ：</label>
 				   <input id="customerCondition.qq" class="search-input-text" name="customerCondition.qq" value="${customerCondition.qq}" />
-				   <label>消费金额：</label>
-				   <input id="customerCondition.totalSpend" class="search-input-text" name="customerCondition.totalSpend" value="${customerCondition.totalSpend}" />
-				   <label>备注：</label>
-				   <input id="customerCondition.remain" class="search-input-text" name="customerCondition.remain" value="${customerCondition.remain}" />
 				   </li>
 			<!-- search btn -->
 		   	<li><a class="l-button" onclick="customer_search()">查询</a></li>

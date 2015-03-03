@@ -6,9 +6,7 @@
 
 package com.basis.core.domain;
 
-import java.util.Date;
-import java.util.Set;
-import java.util.HashSet;
+import java.math.BigDecimal;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -28,7 +26,7 @@ public class Customer implements java.io.Serializable{
 	private java.lang.String name;
 	
 	/** 客户性别*/
-	private java.lang.Integer sex;
+	private java.lang.Integer sex = 0;
 	
 	/** 客户电话*/
 	private java.lang.String phone;
@@ -40,7 +38,7 @@ public class Customer implements java.io.Serializable{
 	private java.lang.String qq;
 	
 	/** 消费金额*/
-	private java.lang.Float totalSpend;
+	private java.math.BigDecimal totalSpend = new BigDecimal(0.00);
 	
 	/** 备注*/
 	private java.lang.String remain;
@@ -107,14 +105,14 @@ public class Customer implements java.io.Serializable{
 		this.qq = value;
 	}
 	
-	public java.lang.Float getTotalSpend() {
-		return this.totalSpend;
+	public java.math.BigDecimal getTotalSpend() {
+		return totalSpend;
 	}
-	
-	public void setTotalSpend(java.lang.Float value) {
-		this.totalSpend = value;
+
+	public void setTotalSpend(java.math.BigDecimal totalSpend) {
+		this.totalSpend = totalSpend;
 	}
-	
+
 	public java.lang.String getRemain() {
 		return this.remain;
 	}

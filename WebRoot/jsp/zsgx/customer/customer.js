@@ -30,6 +30,9 @@ $(function() {
 						html += "<a href='javascript:;' onclick='customer_edit(\""
 								+ item.id
 								+ "\")' class='linkbutton'>修改</a>";
+						html += "<a href='javascript:;' onclick='customer_buy(\""
+							+ item.id
+							+ "\")' class='linkbutton'>购买记录</a>";
 						return html;
 					}
 				},
@@ -40,7 +43,14 @@ $(function() {
 				},
 				{
 					display : "客户性别",
-					name : "sex"
+					name : "sex",
+					render : function(item) {
+						if(item.sex == "0"){
+							return "男";
+						}else{
+							return "女";
+						}
+					}
 				},
 				{
 					display : "客户电话",
@@ -55,7 +65,7 @@ $(function() {
 					name : "qq"
 				},
 				{
-					display : "消费金额",
+					display : "消费金额(元)",
 					name : "totalSpend"
 				},
 				{
@@ -103,4 +113,9 @@ function customer_edit(id) {
 			gg("zsgx_customer_edit_window").contentWindow.customer_edit_submit(dialog);
 		}
 	});
+
+}
+
+function customer_buy(id){
+	window.location.href = basePath+ "zsgx/salesRecord!index.action?salesRecordCondition.customerId="+id;
 }

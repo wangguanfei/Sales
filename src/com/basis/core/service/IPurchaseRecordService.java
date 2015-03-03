@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import com.basis.core.common.Page;
 import com.basis.core.domain.PurchaseRecord;
+import com.basis.core.dto.PurchaseDto;
 import com.basis.core.common.Result;
 
 import com.basis.core.condition.PurchaseRecordCondition;
@@ -69,4 +70,23 @@ public interface IPurchaseRecordService {
 	 * @throws
 	 */
 	public List<String> queryPurchasePrice(Long goodsId);
+	
+	/**
+	* @Description: 按月统计
+	* @author wgf
+	* @date 2015-3-2 上午11:19:18  
+	* @return List<PurchaseRecord>
+	* @throws
+	*/ 
+	public List<PurchaseDto> queryPurchaseRecordByMonth(String year);
+	
+	/**
+	* @Description: 年份总计
+	* @author wgf
+	* @date 2015-3-2 下午3:29:16  
+	* @return String
+	* @throws
+	*/ 
+	public String SumPurchaseRecordByYear(String year);
+	
 }

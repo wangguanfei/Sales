@@ -34,15 +34,15 @@
 	    	<ul>
 	    		<li>
 	    			<label><font color="red">*</font>客户姓名：</label>
-			  	    <input type="text" name="customer.name" value="${customer.name}" class="search-input-text " />
+			  	    <input type="text" name="customer.name" value="${customer.name}" class="search-input-text required" />
 					<!-- <font color="red">客户姓名提示</font> -->
 				</li>
 	    	</ul>
 	    	<ul>
 	    		<li>
 	    			<label><font color="red">*</font>客户性别：</label>
-			  	    <input type="text" name="customer.sex" value="${customer.sex}" class="search-input-text digits " />
-					<!-- <font color="red">客户性别提示</font> -->
+					 <input type="radio" name="customer.sex" value="0" checked="checked"/>男
+			  	     <input type="radio" name="customer.sex" value="1" />女
 				</li>
 	    	</ul>
 	    	<ul>
@@ -66,14 +66,14 @@
 					<!-- <font color="red">客户QQ提示</font> -->
 				</li>
 	    	</ul>
-	    	<ul>
+	    	<%--<ul>
 	    		<li>
 	    			<label><font color="red">*</font>消费金额：</label>
 			  	    <input type="text" name="customer.totalSpend" value="${customer.totalSpend}" class="search-input-text " />
 					<!-- <font color="red">消费金额提示</font> -->
 				</li>
 	    	</ul>
-	    	<ul>
+	    	--%><ul>
 	    		<li>
 	    			<label><font color="red">*</font>备注：</label>
 			  	    <input type="text" name="customer.remain" value="${customer.remain}" class="search-input-text " />

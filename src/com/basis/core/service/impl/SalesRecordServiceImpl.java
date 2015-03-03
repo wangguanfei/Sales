@@ -99,16 +99,13 @@ public class SalesRecordServiceImpl implements ISalesRecordService{
 		ExcelWritePoiUtil writePoiUtil = new ExcelWritePoiUtil();
 		HSSFSheet sheet = writePoiUtil.createSheet();
 		String[] headers = {
-				"id",
 				"商品",
+				"客户名称",
 				"销售数量",
 				"销售价格",
 				"商品进价",
 				"销售时间",
-				"销售年份",
-				"销售月份",
-				"销售日期",
-				"收入",
+				"销售总额",
 				"利润",
 				"备注"
 		};
@@ -134,15 +131,12 @@ public class SalesRecordServiceImpl implements ISalesRecordService{
 			for(int i=0;i<page.getData().size();i++){
 				SalesRecord e = page.getData().get(i);
 				String[] datas = new String[]{
-						null==e.getId()?"":e.getId()+"",
-						null==e.getGoodsId()?"":e.getGoodsId()+"",
+						null==e.getGoods()?"":e.getGoods().getName()+"",
+						null==e.getCustomer()?"":e.getCustomer().getName()+"",		
 						null==e.getSalesNumber()?"":e.getSalesNumber()+"",
 						null==e.getSalesPrice()?"":e.getSalesPrice()+"",
 						null==e.getPurchasePrice()?"":e.getPurchasePrice()+"",
-						null==e.getSalesDate()?"":e.getSalesDate()+"",
-						null==e.getSalesYear()?"":e.getSalesYear()+"",
-						null==e.getSalesMonth()?"":e.getSalesMonth()+"",
-						null==e.getSalesDay()?"":e.getSalesDay()+"",
+						null==e.getSalesDateStr()?"":e.getSalesDateStr()+"",
 						null==e.getIncome()?"":e.getIncome()+"",
 						null==e.getProfit()?"":e.getProfit()+"",
 						null==e.getRemain()?"":e.getRemain()
@@ -158,7 +152,7 @@ public class SalesRecordServiceImpl implements ISalesRecordService{
 			page = this.querySalesRecordPage(condition);
 		}
 		
-		String result = StringUtil.parseToPath(rootpath+"/exam/"+DateUtil.format(new Date(), "yyyy-MM-dd")+"/"+UUID.randomUUID().toString());
+		String result = StringUtil.parseToPath(rootpath+"/exportTemp/"+UUID.randomUUID().toString());
 		try {
 			writePoiUtil.saveExcel(result);
 		} catch (Exception e) {

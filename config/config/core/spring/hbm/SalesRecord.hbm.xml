@@ -31,7 +31,7 @@
                 <comment>商品进价</comment>
             </column>
         </property>
-		 <property name="salesDate" type="java.util.Date">
+		 <property name="salesDate" type="java.lang.Long">
             <column name="sales_date">
                 <comment>销售时间</comment>
             </column>

@@ -1,14 +1,6 @@
 var salesRecord_grid = null;
 var salesRecord_toolbar = {
-	items : [ {
-		line : true
-	}, {
-		text : "增加",
-		click : salesRecord_add,
-		icon : "add"
-	}, {
-		line : true
-	} ]
+	items : [ ]
 };
 
 $(function() {
@@ -29,6 +21,13 @@ $(function() {
 					}
 				},
 				{
+					display : "客户姓名",
+					name : "customerId",
+					render : function(item) {
+						return item.customer.name;
+					}
+				},
+				{
 					display : "销售数量",
 					name : "salesNumber"
 				},
@@ -45,7 +44,7 @@ $(function() {
 					name : "salesDateStr"
 				},
 				{
-					display : "收入(元)",
+					display : "销售总额(元)",
 					name : "income"
 				},
 				{

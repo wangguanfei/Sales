@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 
 import com.basis.core.domain.PurchaseRecord;
+import com.basis.core.dto.PurchaseDto;
 
 import com.basis.core.common.Page;
 import com.basis.core.common.Result;
@@ -28,6 +29,7 @@ import com.basis.core.util.StringUtil;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.hibernate.transform.Transformers;
 
 /**
  * 进货表业务处理
@@ -99,12 +101,11 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 		ExcelWritePoiUtil writePoiUtil = new ExcelWritePoiUtil();
 		HSSFSheet sheet = writePoiUtil.createSheet();
 		String[] headers = {
-				"id",
 				"商品",
 				"进货数量",
-				"进货价",
+				"进货价(元)",
+				"总支出(元)",
 				"进货时间",
-				"进货时间"
 		};
 		for(int i=0;i<headers.length;i++){
 			sheet.setColumnWidth(i,3000);
@@ -121,18 +122,20 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 		Page<PurchaseRecord> page = this.queryPurchaseRecordPage(condition);
 		
 		int index = 0;
+		if (page.getRecordSize() == 0) {
+			return "";
+		}
 		while(index < page.getRecordSize()){
 			if(null==page.getData() || page.getData().isEmpty()){
-				break;
+				return "";
 			}
 			for(int i=0;i<page.getData().size();i++){
 				PurchaseRecord e = page.getData().get(i);
 				String[] datas = new String[]{
-						null==e.getId()?"":e.getId()+"",
-						null==e.getGoodsId()?"":e.getGoodsId()+"",
+						null==e.getGoods()?"":e.getGoods().getName()+"",
 						null==e.getGoodsNum()?"":e.getGoodsNum()+"",
 						null==e.getPurchasePrice()?"":e.getPurchasePrice()+"",
-						null==e.getPurchaseDate()?"":e.getPurchaseDate()+"",
+						null==e.getTotalMoney()?"":e.getTotalMoney()+"",
 						null==e.getPurchaseDateStr()?"":e.getPurchaseDateStr()
 					};
 				try{
@@ -146,7 +149,7 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 			page = this.queryPurchaseRecordPage(condition);
 		}
 		
-		String result = StringUtil.parseToPath(rootpath+"/exam/"+DateUtil.format(new Date(), "yyyy-MM-dd")+"/"+UUID.randomUUID().toString());
+		String result = StringUtil.parseToPath(rootpath+"/exportTemp/"+UUID.randomUUID().toString()+".xls");
 		try {
 			writePoiUtil.saveExcel(result);
 		} catch (Exception e) {
@@ -184,5 +187,39 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 			return this.getDao().getSession().createSQLQuery(sql).list();
 		}
 		return null;
+	}
+
+	/**
+	* @Description: 按月统计
+	* @author wgf
+	* @date 2015-3-2 上午11:19:54
+	* @param year
+	* @return    
+	* @throws 
+	*/ 
+	@Override
+	public List<PurchaseDto> queryPurchaseRecordByMonth(String year) {
+		if (null!=year && !"".equals(year)) {
+			String sql = "SELECT SUM(total_money) AS total_money ,purchase_month FROM `zsgx_purchase_record` WHERE purchase_year = '"+year+"' GROUP BY purchase_month ORDER BY purchase_month";
+			return this.getDao().getSession().createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(PurchaseDto.class)).list();
+		}
+		return null;
+	}
+
+	/**
+	* @Description: 年份总计
+	* @author wgf
+	* @date 2015-3-2 下午3:29:16  
+	* @return String
+	* @throws
+	*/ 
+	@Override
+	public String SumPurchaseRecordByYear(String year) {
+		if (null!=year && !"".equals(year)) {
+			String sql = "SELECT SUM(total_money) AS total FROM `zsgx_purchase_record` WHERE purchase_year = '"+year+"'";
+			Object obj = this.getDao().getSession().createSQLQuery(sql).uniqueResult();
+			return null != obj?obj.toString():"0";
+		}
+		return "0";
 	}
 }	

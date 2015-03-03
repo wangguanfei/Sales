@@ -6,10 +6,6 @@
 
 package com.basis.core.domain;
 
-import java.util.Date;
-import java.util.Set;
-import java.util.HashSet;
-
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -17,6 +13,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.basis.core.service.ICustomerService;
 import com.basis.core.service.IGoodsService;
 import com.basis.core.util.ApplicationContextHolder;
 import com.basis.core.util.DateUtil;
@@ -43,7 +40,7 @@ public class SalesRecord implements java.io.Serializable{
 	private java.math.BigDecimal purchasePrice;
 	
 	/** 销售时间*/
-	private java.util.Date salesDate;
+	private java.lang.Long salesDate;
 	
 	/** 销售年份*/
 	private java.lang.String salesYear;
@@ -104,23 +101,23 @@ public class SalesRecord implements java.io.Serializable{
 		this.salesNumber = value;
 	}
 	
-	public java.util.Date getSalesDate() {
-		return this.salesDate;
-	}
-	
 	@Transient
 	public String getSalesDateStr(){
 		if (null!=salesDate) {
-			return DateUtil.format(salesDate, "yyyy-MM-dd HH:mm:ss");
+			return DateUtil.format(DateUtil.longToDate(salesDate), "yyyy-MM-dd HH:mm:ss");
 		}
 		return "";
 		
 	}
 	
-	public void setSalesDate(java.util.Date value) {
-		this.salesDate = value;
+	public java.lang.Long getSalesDate() {
+		return salesDate;
 	}
-	
+
+	public void setSalesDate(java.lang.Long salesDate) {
+		this.salesDate = salesDate;
+	}
+
 	public java.lang.String getSalesYear() {
 		return this.salesYear;
 	}
@@ -238,6 +235,23 @@ public class SalesRecord implements java.io.Serializable{
 		if (null != this.goodsId && this.goodsId !=0) {
 			IGoodsService goodsService = (IGoodsService)ApplicationContextHolder.getBean("goodsService");
 			return goodsService.queryGoodsById(this.goodsId);
+		}
+		return null;
+		
+	}
+	/**
+	 * @Description: 查询顾客
+	 * @author wgf
+	 * @date 2014-10-13上午10:24:42
+	 * @param @return   
+	 * @return Goods  
+	 * @throws
+	 */
+	@Transient
+	public Customer getCustomer(){
+		if (null != this.customerId && this.customerId !=0) {
+			ICustomerService customerService = (ICustomerService)ApplicationContextHolder.getBean("customerService");
+			return customerService.queryCustomerById(this.customerId);
 		}
 		return null;
 		

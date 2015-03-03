@@ -41,8 +41,8 @@
 	    	<ul>
 	    		<li>
 	    			<label><font color="red">*</font>客户性别：</label>
-			  	    <input type="text" name="customer.sex" value="${customer.sex}" class="search-input-text digits " />
-					<!-- <font color="red">客户性别提示</font> -->
+					 <input type="radio" name="customer.sex" value="0" <c:if test="${customer.sex == 0}">checked="checked"</c:if>/>男
+			  	     <input type="radio" name="customer.sex" value="1" <c:if test="${customer.sex == 1}">checked="checked"</c:if>/>女
 				</li>
 	    	</ul>
 	    	<ul>
@@ -69,8 +69,7 @@
 	    	<ul>
 	    		<li>
 	    			<label><font color="red">*</font>消费金额：</label>
-			  	    <input type="text" name="customer.totalSpend" value="${customer.totalSpend}" class="search-input-text " />
-					<!-- <font color="red">消费金额提示</font> -->
+			  	    ${customer.totalSpend} 元
 				</li>
 	    	</ul>
 	    	<ul>

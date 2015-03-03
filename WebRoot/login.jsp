@@ -11,6 +11,9 @@
     <script src="${basePath }ligerui/jquery/jquery-1.5.2.min.js" type="text/javascript"></script>
    	<link rel="stylesheet" type="text/css" href="${basePath }grind/css/style.css"  />
     <script type="text/javascript">
+       $(document).ready(function(){
+    	   $("#name").focus();
+       });
         function f_submit(){
         	if($("#name").val()==""){
         		$("#msg").html("用户名不能为空");

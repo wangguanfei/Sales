@@ -16,6 +16,7 @@
 			<result name="purchaseRecord-index">/jsp/zsgx/purchaseRecord/index.jsp</result>
 			<result name="purchaseRecord-add">/jsp/zsgx/purchaseRecord/add.jsp</result>
 			<result name="purchaseRecord-edit">/jsp/zsgx/purchaseRecord/edit.jsp</result>
+			<result name="purchaseRecord-statistics">/jsp/zsgx/purchaseRecord/statistics.jsp</result>
 		</action>
 		<!-- 销售记录 -->
 		<action name="salesRecord" class="com.basis.web.action.SalesRecordAction">
@@ -24,11 +25,17 @@
 			<result name="salesRecord-edit">/jsp/zsgx/salesRecord/edit.jsp</result>
 			<result name="goods-sales">/jsp/zsgx/salesRecord/sales.jsp</result>
 		</action>
-				<!-- 客户信息 -->
+		<!-- 客户信息 -->
 		<action name="customer" class="com.basis.web.action.CustomerAction">
 			<result name="customer-index">/jsp/zsgx/customer/index.jsp</result>
 			<result name="customer-add">/jsp/zsgx/customer/add.jsp</result>
 			<result name="customer-edit">/jsp/zsgx/customer/edit.jsp</result>
+			<!-- 经营统计 -->
+		</action>
+		<action name="statistics" class="com.basis.web.action.StatisticsAction">
+			<result name="statistics-index">/jsp/zsgx/statistics/index.jsp</result>
+			<result name="statistics-add">/jsp/zsgx/statistics/add.jsp</result>
+			<result name="statistics-edit">/jsp/zsgx/statistics/edit.jsp</result>
 		</action>
 	</package>
 </struts>

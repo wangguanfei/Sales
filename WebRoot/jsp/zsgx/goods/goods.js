@@ -51,10 +51,12 @@ $(function() {
 					display : "销售",
 					name : "id",
 					render : function(item) {
-						
-						var html = "<a href='javascript:;' onclick='goods_sales(\""
-							+ item.id
-							+ "\")' class='linkbutton'>销售</a>";
+						var html = "";
+						if(item.stock > 0){
+							 html += "<a href='javascript:;' onclick='goods_sales(\""
+									+ item.id
+									+ "\")' class='linkbutton'>销售</a>";
+						}
 						html += "<a href='javascript:;' onclick='goods_sales_record(\""
 							+ item.id
 							+ "\")' class='linkbutton'>销售记录</a>";
@@ -126,8 +128,8 @@ function goods_sales(id) {
 		title : "销售",
 		name : "zsgx_goods_edit_window",
 		url : basePath+"zsgx/salesRecord!toGoodsSales.action?salesRecord.goodsId="+id,
-		width : 500,
-		height : 300,
+		width : 700,
+		height : 500,
 		onok : function(item, dialog){
 			gg("zsgx_goods_edit_window").contentWindow.goods_edit_submit(dialog);
 		}
