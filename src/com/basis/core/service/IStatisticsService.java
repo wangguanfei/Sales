@@ -84,4 +84,12 @@ public interface IStatisticsService {
 	* @throws
 	*/ 
 	public Map<String,Object> getYearMap(String nowYear);
+	/**
+	* @Description: 概况统计
+	* @author wgf
+	* @date 2015-3-6 上午11:14:43  
+	* @return Map<String,Object>
+	* @throws
+	*/ 
+	public Map<String,Object> statisticAll(String type);
 }

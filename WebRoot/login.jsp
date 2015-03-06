@@ -2,10 +2,10 @@
 <%@ include file="/jsp/inc/meta.inc" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>国家专业技术人才知识更新工程公共服务平台</title>
+<title>艺奇模特管理后台系统</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="title" content="国家专业技术人才知识更新工程公共服务平台"/>
-    <meta name="application-name" content="国家专业技术人才知识更新工程公共服务平台" />
+    <meta name="title" content="艺奇模特管理后台系统"/>
+    <meta name="application-name" content="艺奇模特管理后台系统" />
 	<link rel="Shortcut Icon" href="${basePath}image/logo.ico"  type=”image/x-icon”/>
 	
     <script src="${basePath }ligerui/jquery/jquery-1.5.2.min.js" type="text/javascript"></script>

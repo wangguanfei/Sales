@@ -6,6 +6,7 @@
 
 package com.basis.core.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Date;
 import java.util.List;
@@ -221,5 +222,31 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 			return null != obj?obj.toString():"0";
 		}
 		return "0";
+	}
+
+	/**
+	* @Description: 根据时间统计总额
+	* @author wgf
+	* @date 2015-3-4 下午2:04:20  
+	* @return String
+	* @throws
+	*/ 
+	@Override
+	public String countByDate(PurchaseRecordCondition purchaseRecordCondition) {
+		StringBuffer sql = new StringBuffer("SELECT SUM(total_money) FROM `zsgx_purchase_record` WHERE 1=1 ");
+		if (!StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && !StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
+			sql.append(" and purchase_date >=");
+			sql.append(DateUtil.parse(purchaseRecordCondition.getPurchaseDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
+			sql.append(" and purchase_date <=");
+			sql.append(DateUtil.addDays(DateUtil.parse(purchaseRecordCondition.getPurchaseDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
+		}else if (StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && !StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
+			sql.append(" and purchase_date <=");
+			sql.append(DateUtil.addDays(DateUtil.parse(purchaseRecordCondition.getPurchaseDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
+		}else if (!StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
+			sql.append(" and purchase_date >=");
+			sql.append(DateUtil.parse(purchaseRecordCondition.getPurchaseDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
+		}
+		Object obj = this.getDao().getSession().createSQLQuery(sql.toString()).uniqueResult();
+		return null != obj?obj.toString():"0";
 	}
 }	

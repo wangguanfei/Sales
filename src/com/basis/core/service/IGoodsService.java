@@ -58,4 +58,6 @@ public interface IGoodsService {
 	 * @return 导出的excel路径
 	 */
 	public String exportDatas(String rootpath,GoodsCondition condition);
+	
+	public List<Goods> getYujing();
 }

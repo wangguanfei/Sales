@@ -6,14 +6,18 @@
 
 package com.basis.core.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
 import com.basis.core.domain.SalesRecord;
+import com.basis.core.dto.StatisticsDto;
 
 import com.basis.core.common.Page;
 import com.basis.core.common.Result;
@@ -28,6 +32,7 @@ import com.basis.core.util.StringUtil;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.hibernate.transform.Transformers;
 
 /**
  * InnoDB free: 11264 kB业务处理
@@ -170,5 +175,42 @@ public class SalesRecordServiceImpl implements ISalesRecordService{
 
 	public void setDao(IBaseDao dao) {
 		this.dao = dao;
+	}
+
+	@Override
+	public Map<String,Object>  countByDate(SalesRecordCondition condition) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		StringBuffer sql = new StringBuffer("SELECT SUM(income) income,SUM(profit) profit FROM `zsgx_sales_record` WHERE 1=1 ");
+		if (!StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && !StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
+			sql.append(" and sales_date >=");
+			sql.append(DateUtil.parse(condition.getSalesDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
+			sql.append(" and sales_date <=");
+			sql.append(DateUtil.addDays(DateUtil.parse(condition.getSalesDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
+		}else if (StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && !StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
+			sql.append(" and sales_date <=");
+			sql.append(DateUtil.addDays(DateUtil.parse(condition.getSalesDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
+		}else if (!StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
+			sql.append(" and sales_date >=");
+			sql.append(DateUtil.parse(condition.getSalesDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
+		}
+		StatisticsDto obj = (StatisticsDto) this.getDao().getSession().createSQLQuery(sql.toString()).setResultTransformer(Transformers.aliasToBean(StatisticsDto.class)).uniqueResult();
+		if (null != obj) {
+			map.put("income", obj.getIncome());
+			map.put("profit", obj.getProfit());
+		}
+		return map;
+	}
+
+	/**
+	* @Description:查询最新六条销售记录
+	* @author wgf
+	* @date 2015-3-6 下午1:51:25  
+	* @return String
+	* @throws
+	*/ 
+	@Override
+	public List<SalesRecord> queryNew6() {
+		String sql = "SELECT * FROM `zsgx_sales_record` ORDER BY sales_date DESC LIMIT 0,6 ";
+		return dao.getSession().createSQLQuery(sql).addEntity(SalesRecord.class).list();
 	}
 }	

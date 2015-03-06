@@ -493,7 +493,47 @@ public class DateUtil {
 			date = setSecond(date, second);
 			return date;
 		}
+		
+		/**
+		* @Description: 当月第一天
+		* @author wgf
+		* @date 2015-3-6 下午12:25:39  
+		* @return Date
+		* @throws
+		*/ 
+		public static Date getFirstDayOfMonth() {  
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+		    return cal.getTime() ;  
+		} 
+		
+		/**
+		* @Description: 上月最后一天
+		* @author wgf
+		* @date 2015-3-6 下午12:25:39  
+		* @return Date
+		* @throws
+		*/ 
+		public static Date getLastDayOfLastMonth() {  
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			cal.add(Calendar.DAY_OF_MONTH, -1);
+		    return cal.getTime() ;  
+		} 
+		/**
+		* @Description: 上月第一天
+		* @author wgf
+		* @date 2015-3-6 下午12:25:39  
+		* @return Date
+		* @throws
+		*/ 
+		public static Date getFirstDayOfLastMonth() {  
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+		    return cal.getTime() ;  
+		} 
 	public static void main(String[] args) throws ParseException {
-		System.out.println(DateUtil.format(new Date(), "dd"));
+		System.out.println(parseDate(DateUtil.getFirstDayOfMonth()));
 	}
 }

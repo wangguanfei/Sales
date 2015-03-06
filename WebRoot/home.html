@@ -1,12 +1,185 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
+	<link href="/css/home.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="/js/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			getTotal(2);
+			getSales();
+			getYuJing();
+		})
+		function getTotal(type){
+			$.ajax({
+				url : "/zsgx/statistics!statisticsTotal.action",
+				type : "post",
+				data : "type="+type,
+				dataType : "json",
+				success : function(json){
+					if (json.success) {
+						$("#totalSalesAmount").html(json.data.income+"元");
+						$("#totalSalesGrossProfit").html(json.data.profit+"元");
+						$("#totalSalesItems").html(json.data.salesNum+"笔");
+						$("#receivables").html(json.data.totalMoney+"元");
+						$("#spanSaleTarget").html(json.data.purchaseNum+"次");
+					} else {
+						//alert(json.message, "error");
+					}
+				},
+				error : function(){
+					closeAllBox();
+					alert("请求错误，请检查网络。");
+				}
+			});
+		}
+		function getClientReceive(type){
+			$("li[class*='tabS']").removeClass("tabS");
+			$("li[type='"+type+"']").addClass("tabS");
+		}
+		
+		//销售动态
+		function getSales(){
+			$.ajax({
+				url : "/zsgx/salesRecord!queryNew6.action",
+				type : "post",
+				dataType : "html",
+				success : function(data){
+					$(".dynamicContent").html(data);
+				},
+				error : function(){
+					closeAllBox();
+					alert("请求错误，请检查网络。");
+				}
+			});
+		}
+		//库存预警
+		function getYuJing(){
+			$.ajax({
+				url : "/zsgx/goods!yuJing.action",
+				type : "post",
+				dataType : "html",
+				success : function(data){
+					$(".WIlist").html(data);
+				},
+				error : function(){
+					closeAllBox();
+					alert("请求错误，请检查网络。");
+				}
+			});
+		}
+	</script>
 </head>
-  <body style="background:url(image/indexbgimg.jpg) repeat-x top left #fff; margin:0px;">
-  </body>
+<body style=" repeat-x top left #fff; margin:0px;">
+	<div class="main">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tbody>
+				<tr>
+					<td valign="top">
+						<div style="display: inline-block;"
+							class="whiteBox noPadding wf100">
+							<div class="borderB fl wf100">
+								<div style="padding-top: 8px;" class="fr mr10">
+								</div>
+
+								<div class="lineTab">
+									<ul>
+										<li type="2" onclick="getTotal(2);getClientReceive(2)"
+											id="tab2" class="tabN tabS"><a href="javascript:;">今日</a>
+										</li>
+										<li type="3" onclick="getTotal(3);getClientReceive(3)"
+											id="tab3" class="tabN"><a href="javascript:;">昨日</a>
+										</li>
+										<li type="4" onclick="getTotal(4);getClientReceive(4)"
+											id="tab4" class="tabN"><a href="javascript:;">本月</a>
+										</li>
+										<li type="5" onclick="getTotal(5);getClientReceive(5)"
+											id="tab5" class="tabN"><a href="javascript:;">上个月</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<table width="100%" cellspacing="0" cellpadding="8" border="0"
+								style="background: #F8F8F8;">
+								<tbody>
+									<tr>
+										<td valign="center" align="center" class="borderR"><span
+											class="font14 fontDeepBlue">销售总额</span><br> <span
+												class="fontOrange"><span id="totalSalesAmount"
+													class="font24 fontOrange"><img src="/image/loading.gif" width='30' height='30' style=" position: relative; top: 5px;"/></span>
+											</span>
+										</td>
+										<td valign="center" align="center" class="borderR"><span
+											class="font14 fontDeepBlue">利润总额
+												<div onmouseout="$(this).children().hide()"
+													onmouseover="$(this).children().show()" class="helpinfo">
+													<div style="display: none;" class="tips">
+														<h2></h2>
+														<h1>利润总额 = 销售总额 - 当期成本价×销售量。</h1>
+													</div>
+												</div> </span><br> <span class="fontGreen"><span
+													id="totalSalesGrossProfit" class="font24 fontGreen"><img src="/image/loading.gif" width='30' height='30' style=" position: relative; top: 5px;"/></span>
+											</span>
+										</td>
+										<td valign="center" align="center" class="borderR"><span
+											class="font14 fontDeepBlue">销售笔数</span><br> <span
+												id="totalSalesItems" class="font24"><img src="/image/loading.gif" width='30' height='30' style=" position: relative; top: 5px;"/></span>
+										</td>
+										<td valign="center" align="center" class="borderR"><span
+											class="font14 fontDeepBlue">进货总额</span><br> <span
+												class="fontGreen"><span id="receivables"
+													class="font24 fontGreen"><img src="/image/loading.gif" width='30' height='30' style=" position: relative; top: 5px;"/></span>
+											</span>
+										</td>
+										<td valign="center" align="center"><span
+											class="font14 fontDeepBlue">进货次数</span><br> <span
+												id="spanSaleTarget" class="font24"><img src="/image/loading.gif" width='30' height='30' style=" position: relative; top: 5px;"/></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> <!-- whiteBox -->
+						<div class="whiteBox noPadding wf100 fl">
+							<div class="indexTitle">
+								<a style="display: none" class="refresh fr mr10" href="desktop"></a>
+								<span class="titleText fontDeepBlue">最新销售动态</span>
+							</div>
+							<div id="dynamicArea" class="dynamicArea">
+								<div class="dynamicContent">
+									
+								</div>
+							</div>
+							<!-- dynamicArea -->
+						</div> <!-- whiteBox --></td>
+					<td width="315" valign="top">
+						<div class="whiteBox warningIndex noPadding">
+							<div class="indexTitle">
+								<span class="titleText fontDeepBlue">库存预警信息</span>
+
+							</div>
+							<div class="WIlist">
+								
+							</div>
+						</div>
+
+
+						<div class=" clear height10"></div>
+						<div style="height: 138px; overflow: hidden;"
+							class="whiteBox warningIndex noPadding">
+							<div class="indexTitle">
+								<span class="titleText fontDeepBlue fl">老板寄语</span>
+							</div>
+							<div style="padding: 10px;" class="content">
+								<span class="font14">好好干，房子车子都会有的～～～</span>
+							</div>
+						</div></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="height10"></div>
+	</div>
+</body>
 </html>

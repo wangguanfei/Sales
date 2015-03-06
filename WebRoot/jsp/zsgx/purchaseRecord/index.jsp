@@ -44,6 +44,49 @@
 				}
 			});
 		}
+		
+		function purchaseRecord_search() {
+			countTotal();
+			purchaseRecord_grid.loadData();
+		}
+		$(document).ready(function(){
+			countTotal();
+		});
+		
+		
+		function countTotal(){
+			var start = $("#beginTimeStr").val();
+			var end = $("#endTimeStr").val();
+			var timeStr = "";
+			if(start != "" && end != ""){
+				timeStr = start+"至"+end
+			}
+			if(start == "" && end != ""){
+				timeStr = "截止至"+end
+			}
+			if(start != "" && end == ""){
+				timeStr =start+"至今 "
+			}
+			$("#countData").html(timeStr);
+			
+			$.ajax({
+				url : basePath+"zsgx/purchaseRecord!countByDate.action",
+				type : "post",
+				data : $("#zsgx_purchaseRecord_form").serialize(),
+				dataType : "json",
+				success : function(json){
+					if (json.success) {
+						$("#totalMoney").html("<font color='red'>"+json.data+"元</font>");
+					} else {
+						//alert(json.message, "error");
+					}
+				},
+				error : function(){
+					closeAllBox();
+					alert("请求错误，请检查网络。");
+				}
+			});
+		}
 	</script>
 	<script type="text/javascript" src="${basePath}jsp/zsgx/common/common.js"></script>
 	<script type="text/javascript" src="${basePath}jsp/zsgx/purchaseRecord/purchaseRecord.js"></script>
@@ -64,6 +107,12 @@
 		   	<li><a class="l-button" onclick="purchaseRecord_search()">查询</a></li>
 		   	<li><a class="l-button" onclick="$('#zsgx_purchaseRecord_form')[0].reset()">重置</a></li>
 		   	<li><a class="l-button" onclick="purchaseRecord_export()">导出</a></li>
+		   </ul>
+		   <ul>
+		   	<li>
+		   		<label><span id="countData"></span>&nbsp;进货总额：
+		   		<span id="totalMoney"><img src="${basePath}image/loading.gif" width='20' height='20' style=" position: relative; top: 5px;"/></span></label>
+		   	</li>
 		   </ul>
 		</form>
 	</div>

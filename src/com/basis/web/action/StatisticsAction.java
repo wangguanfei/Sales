@@ -80,6 +80,17 @@ public class StatisticsAction extends BaseAction{
 	}
 	
 	
+	@Authority(operator = EOperator.SELECT)
+	public String statisticsTotal() {
+		try {
+			String type = request.getParameter("type");
+			result.setData(statisticsService.statisticAll(type));
+		} catch (Exception e) {
+			logger.error(e);	
+			result = new Result<Object>(false, EMessageCode.EXCEPTION.getCode());
+		}
+		return "json-result";
+	}
 	
 	/** 
 	 * get set 

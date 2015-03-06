@@ -2,8 +2,8 @@
 <%@ include file="/jsp/inc/meta.inc" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta name="title" content="国家专业技术人才知识更新工程公共服务平台"/>
-    <meta name="application-name" content="国家专业技术人才知识更新工程公共服务平台" />
+    <meta name="title" content="艺奇模特管理后台系统"/>
+    <meta name="application-name" content="艺奇模特管理后台系统" />
 	<link rel="Shortcut Icon" href="${basePath}image/logo.ico"  type=”image/x-icon”/>
     <%@ include file="/jsp/inc/head.inc" %>
        <script type="text/javascript">
@@ -84,7 +84,7 @@
     .l-winbar{ background:#2B5A76; height:30px; position:absolute; left:0px; bottom:0px; width:100%; z-index:99999;}
     .space{ color:#E7E7E7;}
     /* 顶部 */ 
-    .l-topmenu{ margin:0; padding:0; height:70px; line-height:31px; background:url(${basePath}image/topbg2.gif) no-repeat left bottom #3699c2;  position:relative;}
+    .l-topmenu{ margin:0; padding:0; height:70px; line-height:31px; background:url(${basePath}image/topbg2.jpg) no-repeat left bottom #3699c2;  position:relative;}
    .l-topmenu img{ margin:6px 0px 0px 15px; }
     .l-topmenu-logo{ color:#E7E7E7; padding-left:0; line-height:26px;}
     .l-topmenu-welcome{  position:absolute; width:184px; height:24px; padding-left:50px; line-height:20px;  right:0px; top:0px; color:#070A0C; background:url(${basePath}image/admin.gif) no-repeat right top;}
@@ -97,7 +97,7 @@
 <div id="pageloading"></div>
 <%@ include file="/jsp/inc/top.inc" %>
 <div id="layout1" style="width:99.3%; margin:0 auto; margin-top:4px; "> 
-		<div position="left"  title="公共服务平台" id="leftMenu" style="width:100%;">
+		<div position="left"  title="艺奇模特" id="leftMenu" style="width:100%;">
 			
 		</div> 
         <div position="center" id="framecenter"> 

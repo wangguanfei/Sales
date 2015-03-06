@@ -216,6 +216,18 @@ public class PurchaseRecordAction extends BaseAction{
 		result.setData(map);
 		return "json-result";
 	}
+	/**
+	* @Description: 根据时间统计
+	* @author wgf
+	* @date 2015-3-5 下午2:33:06  
+	* @return String
+	* @throws
+	*/ 
+	@Authority(operator = EOperator.SELECT)
+	public String countByDate() {
+		result.setData(purchaseRecordService.countByDate(purchaseRecordCondition));
+		return "json-result";
+	}
 	/** 
 	 * get set 
 	 **/

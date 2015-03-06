@@ -65,10 +65,6 @@ $(function() {
 	salesRecord_grid = showGrid(g);
 });
 
-function salesRecord_search() {
-	salesRecord_grid.loadData();
-}
-
 function salesRecord_delete(id) {
 	confirm("删除操作", "确认删除吗？", function() {
 		$.getJSON(basePath+"zsgx/salesRecord!delete.action?salesRecord.id=" + id,function(json) {

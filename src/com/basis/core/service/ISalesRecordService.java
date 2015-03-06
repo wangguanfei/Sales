@@ -7,12 +7,14 @@
 package com.basis.core.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import com.basis.core.common.Page;
 import com.basis.core.domain.SalesRecord;
 import com.basis.core.common.Result;
 
+import com.basis.core.condition.PurchaseRecordCondition;
 import com.basis.core.condition.SalesRecordCondition;
 /**
  * InnoDB free: 11264 kB业务处理
@@ -58,4 +60,21 @@ public interface ISalesRecordService {
 	 * @return 导出的excel路径
 	 */
 	public String exportDatas(String rootpath,SalesRecordCondition condition);
+	/**
+	* @Description: 根据时间统计总额
+	* @author wgf
+	* @date 2015-3-4 下午2:04:20  
+	* @return String
+	* @throws
+	*/ 
+	public Map<String,Object> countByDate(SalesRecordCondition condition);
+	
+	/**
+	* @Description:查询最新六条销售记录
+	* @author wgf
+	* @date 2015-3-6 下午1:51:25  
+	* @return String
+	* @throws
+	*/ 
+	public  List<SalesRecord> queryNew6();
 }

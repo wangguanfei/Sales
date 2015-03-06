@@ -89,4 +89,13 @@ public interface IPurchaseRecordService {
 	*/ 
 	public String SumPurchaseRecordByYear(String year);
 	
+	/**
+	* @Description: 根据时间统计总额
+	* @author wgf
+	* @date 2015-3-4 下午2:04:20  
+	* @return String
+	* @throws
+	*/ 
+	public String countByDate(PurchaseRecordCondition purchaseRecordCondition);
+	
 }

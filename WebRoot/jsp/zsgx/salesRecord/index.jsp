@@ -44,6 +44,50 @@
 				}
 			});
 		}
+		function salesRecord_search() {
+			countTotal();
+			salesRecord_grid.loadData();
+		}
+		
+		$(document).ready(function(){
+			countTotal();
+		});
+		
+		
+		function countTotal(){
+			var start = $("#beginTimeStr").val();
+			var end = $("#endTimeStr").val();
+			var timeStr = "";
+			if(start != "" && end != ""){
+				timeStr = start+"至"+end
+			}
+			if(start == "" && end != ""){
+				timeStr = "截止至"+end
+			}
+			if(start != "" && end == ""){
+				timeStr =start+"至今 "
+			}
+			$("#countData").html(timeStr);
+			
+			$.ajax({
+				url : basePath+"zsgx/salesRecord!countByDate.action",
+				type : "post",
+				data : $("#zsgx_salesRecord_form").serialize(),
+				dataType : "json",
+				success : function(json){
+					if (json.success) {
+						$("#salesMoney").html("<font color='red'>"+json.data.income+"元</font>");
+						$("#profitMoney").html("<font color='red'>"+json.data.profit+"元</font>");
+					} else {
+						//alert(json.message, "error");
+					}
+				},
+				error : function(){
+					closeAllBox();
+					alert("请求错误，请检查网络。");
+				}
+			});
+		}
 	</script>
 	<script type="text/javascript" src="${basePath}jsp/zsgx/common/common.js"></script>
 	<script type="text/javascript" src="${basePath}jsp/zsgx/salesRecord/salesRecord.js"></script>
@@ -65,6 +109,13 @@
 		   	<li><a class="l-button" onclick="salesRecord_search()">查询</a></li>
 		   	<li><a class="l-button" onclick="$('#zsgx_salesRecord_form')[0].reset()">重置</a></li>
 		   	<li><a class="l-button" onclick="salesRecord_export()">导出</a></li>
+		   </ul>
+		   <ul>
+		   	<li>
+		   		<label><span id="countData"></span>
+		   		 &nbsp;销售总额：<span id="salesMoney"><img src="${basePath}image/loading.gif" width='20' height='20' style=" position: relative; top: 5px;"/></span>
+		   		 &nbsp;利润总额：<span id="profitMoney"><img src="${basePath}image/loading.gif" width='20' height='20' style=" position: relative; top: 5px;"/></span></label>
+		   	</li>
 		   </ul>
 		</form>
 	</div>

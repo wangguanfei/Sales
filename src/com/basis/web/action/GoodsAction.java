@@ -9,6 +9,7 @@ package com.basis.web.action;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -178,6 +179,20 @@ public class GoodsAction extends BaseAction{
 			result = new Result<Object>(false, EMessageCode.EXCEPTION.getCode());
 		}
 		return "json-result";
+	}
+	
+	/**
+	* @Description: 库存预警
+	* @author wgf
+	* @date 2015-3-6 下午2:36:18  
+	* @return String
+	* @throws
+	*/ 
+	@Authority(operator=EOperator.SELECT)
+	public String yuJing(){
+		List<Goods> list = goodsService.getYujing();
+		request.setAttribute("list", list);
+		return "goods-yuJing";
 	}
 	/** 
 	 * get set 

@@ -9,7 +9,9 @@ package com.basis.web.action;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -250,6 +252,33 @@ public class SalesRecordAction extends BaseAction{
 			result.setData(path);
 		}
 		return "json-result";
+	}
+	
+	/**
+	* @Description: 根据时间统计
+	* @author wgf
+	* @date 2015-3-5 下午2:33:06  
+	* @return String
+	* @throws
+	*/ 
+	@Authority(operator = EOperator.SELECT)
+	public String countByDate() {
+		result.setData(salesRecordService.countByDate(salesRecordCondition));
+		return "json-result";
+	}
+	/**
+	* @Description:查询最新六条销售记录
+	* @author wgf
+	* @date 2015-3-6 下午1:51:25  
+	* @return String
+	* @throws
+	*/ 
+	@Authority(operator = EOperator.SELECT)
+	public String queryNew6() {
+		List<SalesRecord> list = salesRecordService.queryNew6();
+		request.setAttribute("list", list);
+		return "salesRecord-newSales";
+		
 	}
 	/** 
 	 * get set 

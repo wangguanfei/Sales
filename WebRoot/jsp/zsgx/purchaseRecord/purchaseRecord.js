@@ -41,9 +41,6 @@ $(function() {
 	purchaseRecord_grid = showGrid(g);
 });
 
-function purchaseRecord_search() {
-	purchaseRecord_grid.loadData();
-}
 
 function purchaseRecord_delete(id) {
 	confirm("删除操作", "确认删除吗？", function() {

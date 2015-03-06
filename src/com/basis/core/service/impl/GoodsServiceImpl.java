@@ -158,4 +158,10 @@ public class GoodsServiceImpl implements IGoodsService{
 	public void setDao(IBaseDao dao) {
 		this.dao = dao;
 	}
+
+	@Override
+	public List<Goods> getYujing() {
+		String sql = "SELECT * FROM `zsgx_goods` WHERE stock < 10 ";
+		return dao.getSession().createSQLQuery(sql).addEntity(Goods.class).list();
+	}
 }	

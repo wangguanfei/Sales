@@ -10,6 +10,7 @@
 			<result name="goods-add">/jsp/zsgx/goods/add.jsp</result>
 			<result name="goods-edit">/jsp/zsgx/goods/edit.jsp</result>
 			<result name="goods-purchase">/jsp/zsgx/goods/purchase.jsp</result>
+			<result name="goods-yuJing">/jsp/zsgx/goods/yuJing.jsp</result>
 		</action>
 		<!-- 进货表 -->
 		<action name="purchaseRecord" class="com.basis.web.action.PurchaseRecordAction">
@@ -24,6 +25,7 @@
 			<result name="salesRecord-add">/jsp/zsgx/salesRecord/add.jsp</result>
 			<result name="salesRecord-edit">/jsp/zsgx/salesRecord/edit.jsp</result>
 			<result name="goods-sales">/jsp/zsgx/salesRecord/sales.jsp</result>
+			<result name="salesRecord-newSales">/jsp/zsgx/salesRecord/newSales.jsp</result>
 		</action>
 		<!-- 客户信息 -->
 		<action name="customer" class="com.basis.web.action.CustomerAction">

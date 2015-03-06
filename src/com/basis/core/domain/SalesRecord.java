@@ -104,7 +104,7 @@ public class SalesRecord implements java.io.Serializable{
 	@Transient
 	public String getSalesDateStr(){
 		if (null!=salesDate) {
-			return DateUtil.format(DateUtil.longToDate(salesDate), "yyyy-MM-dd HH:mm:ss");
+			return DateUtil.format(DateUtil.longToDate(salesDate), "yyyy-MM-dd HH:mm");
 		}
 		return "";
 		
