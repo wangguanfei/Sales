@@ -156,7 +156,9 @@ public class SalesRecordServiceImpl implements ISalesRecordService{
 			condition.setPageNo(condition.getPageNo()+1);
 			page = this.querySalesRecordPage(condition);
 		}
-		
+		Map<String,Object> map = countByDate(condition);
+		String[] datas = new String[]{"总计","","","","","",null!=map.get("income")?map.get("income").toString():"0",null!=map.get("profit")?map.get("profit").toString():"0",""};
+		writePoiUtil.addRow(sheet,(index+2), datas, (HSSFCellStyle)null);
 		String result = StringUtil.parseToPath(rootpath+"/exportTemp/"+UUID.randomUUID().toString());
 		try {
 			writePoiUtil.saveExcel(result);
@@ -186,12 +188,22 @@ public class SalesRecordServiceImpl implements ISalesRecordService{
 			sql.append(DateUtil.parse(condition.getSalesDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
 			sql.append(" and sales_date <=");
 			sql.append(DateUtil.addDays(DateUtil.parse(condition.getSalesDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
-		}else if (StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && !StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
+		} 
+		if (StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && !StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
 			sql.append(" and sales_date <=");
 			sql.append(DateUtil.addDays(DateUtil.parse(condition.getSalesDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
-		}else if (!StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
+		}
+		if (!StringUtil.stringIsNull(condition.getSalesDateBeaginStr()) && StringUtil.stringIsNull(condition.getSalesDateEndStr())) {
 			sql.append(" and sales_date >=");
 			sql.append(DateUtil.parse(condition.getSalesDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
+		}
+		if (null != condition.getCustomerId()) {
+			sql.append(" and customer_id=");
+			sql.append(condition.getCustomerId());
+		}
+		if (null != condition.getGoodsId()) {
+			sql.append(" and goods_id=");
+			sql.append(condition.getGoodsId());
 		}
 		StatisticsDto obj = (StatisticsDto) this.getDao().getSession().createSQLQuery(sql.toString()).setResultTransformer(Transformers.aliasToBean(StatisticsDto.class)).uniqueResult();
 		if (null != obj) {

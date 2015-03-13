@@ -14,11 +14,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.basis.core.common.Result;
+import com.basis.core.condition.FactoryInfoCondition;
 import com.basis.core.condition.GoodsCondition;
 import com.basis.core.constants.EMessageCode;
 import com.basis.core.constants.EOperator;
 import com.basis.core.domain.Goods;
 import com.basis.core.domain.PurchaseRecord;
+import com.basis.core.service.IFactoryInfoService;
 import com.basis.core.service.IGoodsService;
 import com.basis.core.service.IPurchaseRecordService;
 import com.basis.core.util.DateUtil;
@@ -32,6 +34,8 @@ public class GoodsAction extends BaseAction{
 	private IGoodsService goodsService;
 	
 	private IPurchaseRecordService purchaseRecordService;
+	
+	private IFactoryInfoService factoryInfoService;
 	
 	private GoodsCondition goodsCondition = new GoodsCondition();
 
@@ -145,6 +149,7 @@ public class GoodsAction extends BaseAction{
 	@Authority(operator=EOperator.SELECT)
 	public String toGoodsPurchase(){
 		try{
+			request.setAttribute("factoryList", factoryInfoService.queryFactoryInfoList(new FactoryInfoCondition()));
 			goods = goodsService.queryGoodsById(goods.getId());
 		}catch(Exception e){
 			logger.error(e);
@@ -236,6 +241,14 @@ public class GoodsAction extends BaseAction{
 	public void setPurchaseRecordService(
 			IPurchaseRecordService purchaseRecordService) {
 		this.purchaseRecordService = purchaseRecordService;
+	}
+
+	public IFactoryInfoService getFactoryInfoService() {
+		return factoryInfoService;
+	}
+
+	public void setFactoryInfoService(IFactoryInfoService factoryInfoService) {
+		this.factoryInfoService = factoryInfoService;
 	}
 	
 	

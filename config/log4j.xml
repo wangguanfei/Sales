@@ -19,22 +19,22 @@
 	</appender>
 	
     <logger name="log4j.logger.java.sql.Statement">
-        <level value="INFO" />
+        <level value="ERROR" />
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="RollingFileAppender"/>
     </logger>
 	<logger name="log4j.logger.java.sql.PreparedStatement">
-        <level value="INFO" />
+        <level value="ERROR" />
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="RollingFileAppender"/>
     </logger>
     <logger name="log4j.logger.java.sql.ResultSet">
-        <level value="INFO" />
+        <level value="ERROR" />
         <appender-ref ref="consoleAppender"/>
         <appender-ref ref="RollingFileAppender"/>
     </logger>
 	<root>
-		<priority value ="INFO" />
+		<priority value ="ERROR" />
 		<appender-ref ref="consoleAppender"/>
 		<appender-ref ref="RollingFileAppender"/>
 	</root>

@@ -16,9 +16,19 @@
                 <comment>商品</comment>
             </column>
         </property>
+		 <property name="factoryId" type="java.lang.Long">
+            <column name="factory_id">
+                <comment>厂家</comment>
+            </column>
+        </property>
 		 <property name="goodsNum" type="java.lang.Integer">
             <column name="goods_num">
                 <comment>进货数量</comment>
+            </column>
+        </property>
+		 <property name="purchaseStatus" type="java.lang.Integer">
+            <column name="purchase_status">
+                <comment>是否结账（0-未结账 1-已结账）</comment>
             </column>
         </property>
 		 <property name="purchasePrice" type="java.math.BigDecimal">
@@ -54,6 +64,11 @@
 		 <property name="purchaseDay" type="java.lang.String">
             <column name="purchase_day">
                 <comment>进货日期</comment>
+            </column>
+        </property>
+         <property name="remain" type="java.lang.String">
+            <column name="remain">
+                <comment>备注</comment>
             </column>
         </property>
 	</class>

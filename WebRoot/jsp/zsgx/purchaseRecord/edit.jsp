@@ -17,7 +17,11 @@
 					basePath+"zsgx/purchaseRecord!doEdit.action",
 					function(json){
 						if(json.success){
-		        			home_fresh();
+		        			//home_fresh();
+		        			window.parent.purchaseRecord_search();
+		        			 closeAllBox();
+		        			 closeWindow();
+							
 						}else{
 							alert(json.message,"error");
 						}
@@ -30,14 +34,6 @@
  	<form id="zsgx_purchaseRecord_edit_form" name="zsgx_purchaseRecord_edit_form" class="l-form validate" method="post">
 	 <input type="hidden" name="purchaseRecord.id" value="${purchaseRecord.id}"/>
 	    <div class="content">
-		
-	    	<ul>
-	    		<li>
-	    			<label><font color="red">*</font>商品：</label>
-			  	    <input type="text" name="purchaseRecord.goodsId" value="${purchaseRecord.goodsId}" class="search-input-text digits " />
-					<!-- <font color="red">商品提示</font> -->
-				</li>
-	    	</ul>
 	    	<ul>
 	    		<li>
 	    			<label><font color="red">*</font>进货数量：</label>
@@ -48,22 +44,8 @@
 	    	<ul>
 	    		<li>
 	    			<label><font color="red">*</font>进货价：</label>
-			  	    <input type="text" name="purchaseRecord.purchasePrice" value="${purchaseRecord.purchasePrice}" class="search-input-text digits " />
+			  	    <input type="text" name="purchaseRecord.purchasePrice" value="${purchaseRecord.purchasePrice}" class="search-input-text  " />
 					<!-- <font color="red">进货价提示</font> -->
-				</li>
-	    	</ul>
-	    	<ul>
-	    		<li>
-	    			<label><font color="red">*</font>进货时间：</label>
-			  	    <input type="text" name="purchaseRecord.purchaseDate" value="${purchaseRecord.purchaseDate}" class="search-input-text " />
-					<!-- <font color="red">进货时间提示</font> -->
-				</li>
-	    	</ul>
-	    	<ul>
-	    		<li>
-	    			<label><font color="red">*</font>进货时间：</label>
-			  	    <input type="text" name="purchaseRecord.purchaseDateStr" value="${purchaseRecord.purchaseDateStr}" class="search-input-text " />
-					<!-- <font color="red">进货时间提示</font> -->
 				</li>
 	    	</ul>
 	    </div>

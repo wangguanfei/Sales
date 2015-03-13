@@ -39,5 +39,11 @@
 			<result name="statistics-add">/jsp/zsgx/statistics/add.jsp</result>
 			<result name="statistics-edit">/jsp/zsgx/statistics/edit.jsp</result>
 		</action>
+		<!-- 厂家信息 -->
+		<action name="factoryInfo" class="com.basis.web.action.FactoryInfoAction">
+			<result name="factoryInfo-index">/jsp/zsgx/factoryInfo/index.jsp</result>
+			<result name="factoryInfo-add">/jsp/zsgx/factoryInfo/add.jsp</result>
+			<result name="factoryInfo-edit">/jsp/zsgx/factoryInfo/edit.jsp</result>
+		</action>
 	</package>
 </struts>

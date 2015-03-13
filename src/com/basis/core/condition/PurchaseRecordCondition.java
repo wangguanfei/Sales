@@ -26,7 +26,7 @@ public class PurchaseRecordCondition  extends Condition{
 		
 		/** 商品*/
 		private java.lang.Long goodsId;
-		
+		private java.lang.Long factoryId;
 		/** 进货数量*/
 		private java.lang.Integer goodsNum;
 		
@@ -52,6 +52,9 @@ public class PurchaseRecordCondition  extends Condition{
 		
 		/** 进货日期*/
 		private java.lang.String purchaseDay;
+		
+		private java.lang.Integer purchaseStatus;
+		private java.lang.String remain;
 		//columns END
 		public java.lang.Long getGoodsId() {
 			return this.goodsId;
@@ -160,6 +163,31 @@ public class PurchaseRecordCondition  extends Condition{
 			this.purchaseDay = purchaseDay;
 		}
 
+		
+	   public java.lang.Integer getPurchaseStatus() {
+			return purchaseStatus;
+		}
+
+		public void setPurchaseStatus(java.lang.Integer purchaseStatus) {
+			this.purchaseStatus = purchaseStatus;
+		}
+
+     	  public java.lang.Long getFactoryId() {
+			return factoryId;
+		}
+
+		public void setFactoryId(java.lang.Long factoryId) {
+			this.factoryId = factoryId;
+		}
+
+	public java.lang.String getRemain() {
+			return remain;
+		}
+
+		public void setRemain(java.lang.String remain) {
+			this.remain = remain;
+		}
+
 	@Override
 	public String getInitialHql() {
 		setIsSQL(false);
@@ -172,9 +200,15 @@ public class PurchaseRecordCondition  extends Condition{
 			if(goodsId != null) {
 	            buffer.append(" and  t.goodsId = :goodsId ");
 	        }
+			if(factoryId != null) {
+				buffer.append(" and  t.factoryId = :factoryId ");
+			}
 			if(goodsNum != null) {
 	            buffer.append(" and  t.goodsNum = :goodsNum ");
 	        }
+			if(purchaseStatus != null) {
+				buffer.append(" and  t.purchaseStatus = :purchaseStatus ");
+			}
 			if(purchasePrice != null) {
 	            buffer.append(" and  t.purchasePrice = :purchasePrice ");
 	        }
@@ -212,8 +246,14 @@ public class PurchaseRecordCondition  extends Condition{
 					if(goodsId!=null) {
 						query.setParameter("goodsId", goodsId);
 					}
+					if(factoryId!=null) {
+						query.setParameter("factoryId", factoryId);
+					}
 					if(goodsNum!=null) {
 						query.setParameter("goodsNum", goodsNum);
+					}
+					if(purchaseStatus!=null) {
+						query.setParameter("purchaseStatus", purchaseStatus);
 					}
 					if(purchasePrice!=null) {
 						query.setParameter("purchasePrice", purchasePrice);

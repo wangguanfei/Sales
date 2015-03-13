@@ -17,12 +17,14 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.basis.core.common.Result;
+import com.basis.core.condition.FactoryInfoCondition;
 import com.basis.core.condition.PurchaseRecordCondition;
 import com.basis.core.constants.Constant;
 import com.basis.core.constants.EMessageCode;
 import com.basis.core.constants.EOperator;
 import com.basis.core.domain.PurchaseRecord;
 import com.basis.core.dto.PurchaseDto;
+import com.basis.core.service.IFactoryInfoService;
 import com.basis.core.service.IPurchaseRecordService;
 import com.basis.core.util.DateUtil;
 import com.basis.web.common.Authority;
@@ -41,6 +43,8 @@ public class PurchaseRecordAction extends BaseAction{
 	
 	private PurchaseRecordCondition purchaseRecordCondition = new PurchaseRecordCondition();
 
+	private IFactoryInfoService factoryInfoService;
+	
 	private PurchaseRecord purchaseRecord = new PurchaseRecord();
 	
 	
@@ -48,6 +52,7 @@ public class PurchaseRecordAction extends BaseAction{
 	 * 列表
 	 */
 	public String index() {
+		request.setAttribute("factoryList", factoryInfoService.queryFactoryInfoList(new FactoryInfoCondition()));
 		return "purchaseRecord-index";
 	}
 	
@@ -81,6 +86,26 @@ public class PurchaseRecordAction extends BaseAction{
 	public String doDelete(){
 		try{
 			result = purchaseRecordService.removePurchaseRecord(purchaseRecord);
+		}catch(Exception e){
+			logger.error(e);
+			result = new Result<Object>(false, EMessageCode.EXCEPTION.getCode());
+		}
+		return "json-result";
+	}
+
+	/**
+	* @Description: 结账
+	* @author wgf
+	* @date 2015-3-12 下午2:53:50  
+	* @return String
+	* @throws
+	*/ 
+	@Authority(operator=EOperator.DELETE)
+	public String invoicing(){
+		try{
+			purchaseRecord = purchaseRecordService.queryPurchaseRecordById(purchaseRecord.getId());
+			purchaseRecord.setPurchaseStatus(1);
+			result = purchaseRecordService.modifyPurchaseRecord(purchaseRecord);
 		}catch(Exception e){
 			logger.error(e);
 			result = new Result<Object>(false, EMessageCode.EXCEPTION.getCode());
@@ -131,6 +156,12 @@ public class PurchaseRecordAction extends BaseAction{
 	@Authority(operator=EOperator.MODIFY)
 	public String doEdit(){
 		try{
+			int goodsNum = purchaseRecord.getGoodsNum();
+			java.math.BigDecimal purchasePrice = purchaseRecord.getPurchasePrice();
+			purchaseRecord = purchaseRecordService.queryPurchaseRecordById(purchaseRecord.getId());
+			purchaseRecord.setGoodsNum(goodsNum);
+			purchaseRecord.setPurchasePrice(purchasePrice);
+			purchaseRecord.setTotalMoney(new BigDecimal(goodsNum).multiply(purchasePrice).setScale(2,BigDecimal.ROUND_HALF_UP));
 			result = purchaseRecordService.modifyPurchaseRecord(purchaseRecord);
 		}catch(Exception e){
 			logger.error(e);
@@ -253,6 +284,14 @@ public class PurchaseRecordAction extends BaseAction{
 	
 	public PurchaseRecordCondition getPurchaseRecordCondition(){
 		return purchaseRecordCondition;
+	}
+
+	public IFactoryInfoService getFactoryInfoService() {
+		return factoryInfoService;
+	}
+
+	public void setFactoryInfoService(IFactoryInfoService factoryInfoService) {
+		this.factoryInfoService = factoryInfoService;
 	}
 	
 	

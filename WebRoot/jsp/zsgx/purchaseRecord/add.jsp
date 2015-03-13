@@ -17,7 +17,10 @@
 					basePath+"zsgx/purchaseRecord!doAdd.action",
 					function(json){
 						if(json.success){
-		        			home_fresh();
+		        			//home_fresh();
+							 window.parent.purchaseRecord_search();
+		        			 closeAllBox();
+		        			 closeWindow();
 						}else{
 							alert(json.message,"error");
 						}

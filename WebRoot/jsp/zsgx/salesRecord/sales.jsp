@@ -25,7 +25,9 @@
 					basePath+"zsgx/salesRecord!goodsSales.action",
 					function(json){
 						if(json.success){
-		        			home_fresh();
+							window.parent.goods_grid.loadData();
+		        			 closeAllBox();
+		        			 closeWindow();
 						}else{
 							alert(json.message,"error");
 						}

@@ -17,7 +17,9 @@
 					basePath+"zsgx/customer!doEdit.action",
 					function(json){
 						if(json.success){
-		        			home_fresh();
+							window.parent.customer_grid.loadData();
+		        			 closeAllBox();
+		        			 closeWindow();
 						}else{
 							alert(json.message,"error");
 						}

@@ -25,7 +25,7 @@ $(function() {
 					name : "customerId",
 					render : function(item) {
 						if(item.customer != null){
-							return item.customer.name;
+							return item.customer.name+"("+item.customer.phone+")";
 						}else{
 							return "";
 						}

@@ -97,6 +97,7 @@
 	<div class="content">
 		<form id="zsgx_salesRecord_form" name="zsgx_salesRecord_form">
 		 <input type="hidden" name="salesRecordCondition.customerId" value="${salesRecordCondition.customerId}"/>
+		 <input type="hidden" name="salesRecordCondition.goodsId" value="${salesRecordCondition.goodsId}"/>
 		   <ul>
 		   <!-- search param 参数过长请拆分UL -->
 			   <li>

@@ -102,7 +102,9 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 		ExcelWritePoiUtil writePoiUtil = new ExcelWritePoiUtil();
 		HSSFSheet sheet = writePoiUtil.createSheet();
 		String[] headers = {
-				"商品",
+				"商品名称",
+				"厂家名称",
+				"是否结账",
 				"进货数量",
 				"进货价(元)",
 				"总支出(元)",
@@ -134,6 +136,8 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 				PurchaseRecord e = page.getData().get(i);
 				String[] datas = new String[]{
 						null==e.getGoods()?"":e.getGoods().getName()+"",
+						null==e.getFactoryInfo()?"":e.getFactoryInfo().getName()+"",
+						0==e.getPurchaseStatus()?"未结账":"已结账",
 						null==e.getGoodsNum()?"":e.getGoodsNum()+"",
 						null==e.getPurchasePrice()?"":e.getPurchasePrice()+"",
 						null==e.getTotalMoney()?"":e.getTotalMoney()+"",
@@ -149,7 +153,8 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 			condition.setPageNo(condition.getPageNo()+1);
 			page = this.queryPurchaseRecordPage(condition);
 		}
-		
+		String[] datas = new String[]{"总计","","","","",countByDate(condition),""};
+		writePoiUtil.addRow(sheet,(index+2), datas, (HSSFCellStyle)null);
 		String result = StringUtil.parseToPath(rootpath+"/exportTemp/"+UUID.randomUUID().toString()+".xls");
 		try {
 			writePoiUtil.saveExcel(result);
@@ -239,12 +244,26 @@ public class PurchaseRecordServiceImpl implements IPurchaseRecordService{
 			sql.append(DateUtil.parse(purchaseRecordCondition.getPurchaseDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
 			sql.append(" and purchase_date <=");
 			sql.append(DateUtil.addDays(DateUtil.parse(purchaseRecordCondition.getPurchaseDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
-		}else if (StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && !StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
+		} 
+		if (StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && !StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
 			sql.append(" and purchase_date <=");
 			sql.append(DateUtil.addDays(DateUtil.parse(purchaseRecordCondition.getPurchaseDateEndStr(), new SimpleDateFormat("yyyy-MM-dd")), 1).getTime());
-		}else if (!StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
+		} 
+		if (!StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateBeaginStr()) && StringUtil.stringIsNull(purchaseRecordCondition.getPurchaseDateEndStr())) {
 			sql.append(" and purchase_date >=");
 			sql.append(DateUtil.parse(purchaseRecordCondition.getPurchaseDateBeaginStr(), new SimpleDateFormat("yyyy-MM-dd")).getTime());
+		}
+		if (null != purchaseRecordCondition.getGoodsId()) {
+			sql.append(" and goods_id =");
+			sql.append(purchaseRecordCondition.getGoodsId());
+		}
+		if (null != purchaseRecordCondition.getFactoryId()) {
+			sql.append(" and factory_id =");
+			sql.append(purchaseRecordCondition.getFactoryId());
+		}
+		if (null != purchaseRecordCondition.getPurchaseStatus()) {
+			sql.append(" and purchase_status =");
+			sql.append(purchaseRecordCondition.getPurchaseStatus());
 		}
 		Object obj = this.getDao().getSession().createSQLQuery(sql.toString()).uniqueResult();
 		return null != obj?obj.toString():"0";

@@ -49,6 +49,34 @@
 			countTotal();
 			purchaseRecord_grid.loadData();
 		}
+		//删除
+		function purchaseRecord_delete(id) {
+			confirm("删除操作", "确认删除吗？", function() {
+				$.getJSON(basePath+"zsgx/purchaseRecord!delete.action?purchaseRecord.id=" + id,function(json) {
+					if (json.success) {
+						countTotal();
+						purchaseRecord_grid.loadData();
+					}else{
+						alert(json.message,"error");
+					}
+				});
+			});
+		}
+		//结账
+		function purchaseRecord_invoicing(id) {
+			confirm("结账", "确认结账吗？", function() {
+				$.getJSON(basePath+"zsgx/purchaseRecord!invoicing.action?purchaseRecord.id=" + id,function(json) {
+					if (json.success) {
+						alert("结账成功","success",function(){
+							countTotal();
+							purchaseRecord_grid.loadData();
+						});
+					}else{
+						alert(json.message,"error");
+					}
+				});
+			});
+		}
 		$(document).ready(function(){
 			countTotal();
 		});
@@ -95,6 +123,7 @@
 	<!-- search start -->
 	<div class="content">
 		<form id="zsgx_purchaseRecord_form" name="zsgx_purchaseRecord_form">
+		<input type="hidden" id="purchaseRecordCondition.goodsId" name="purchaseRecordCondition.goodsId" value="${purchaseRecordCondition.goodsId}"/>
 		   <ul>
 		   <!-- search param 参数过长请拆分UL -->
 			   <li>
@@ -102,7 +131,24 @@
 				   <input  type="text"  name="purchaseRecordCondition.purchaseDateBeaginStr"  onFocus="WdatePicker({isShowWeek:true,maxDate:'#F{$dp.$D(\'endTimeStr\')}'})"  class="Wdate search-input-text" id="beginTimeStr" value="${purchaseRecordCondition.purchaseDateBeaginStr}" />
 				   <label>~</label>
 				   <input  type="text"  name="purchaseRecordCondition.purchaseDateEndStr"  onFocus="WdatePicker({isShowWeek:true,minDate:'#F{$dp.$D(\'beginTimeStr\')}'})"  class="Wdate search-input-text" id="endTimeStr" value="${purchaseRecordCondition.purchaseDateEndStr}" />
-				   </li>
+			  </li>
+			  <li>
+	    			<label>厂家名称：</label>
+			  	    <select name="purchaseRecordCondition.factoryId" class="input-select" style="width: 132px;">
+			  	    <option value="" class="option">==请选择==</option>
+			  	    	<c:forEach items="${factoryList}" var="factory">
+		  	    			<option value="${factory.id}" class="option">${factory.name}</option>
+		  	    		</c:forEach>
+			  	    </select>
+			  </li>
+			   <li>
+	    			<label>是否结账：</label>
+			  	    <select name="purchaseRecordCondition.purchaseStatus" class="input-select" style="width: 132px;">
+			  	    <option value="" class="option">==请选择==</option>
+			  	    <option value="0" class="option">未结账</option>
+			  	    <option value="1" class="option">已结账</option>
+			  	    </select>
+			  </li>
 			<!-- search btn -->
 		   	<li><a class="l-button" onclick="purchaseRecord_search()">查询</a></li>
 		   	<li><a class="l-button" onclick="$('#zsgx_purchaseRecord_form')[0].reset()">重置</a></li>

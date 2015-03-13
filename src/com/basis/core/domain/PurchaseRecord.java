@@ -13,6 +13,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.basis.core.service.IFactoryInfoService;
 import com.basis.core.service.IGoodsService;
 import com.basis.core.util.ApplicationContextHolder;
 
@@ -27,9 +28,12 @@ public class PurchaseRecord implements java.io.Serializable{
 	
 	/** 商品*/
 	private java.lang.Long goodsId;
+	private java.lang.Long factoryId;
 	
 	/** 进货数量*/
 	private java.lang.Integer goodsNum;
+	//是否结账
+	private java.lang.Integer purchaseStatus;
 	
 	/** 进货价*/
 	private java.math.BigDecimal purchasePrice;
@@ -49,6 +53,7 @@ public class PurchaseRecord implements java.io.Serializable{
 	
 	/** 进货日期*/
 	private java.lang.String purchaseDay;
+	private java.lang.String remain;
 	//columns END
 
 
@@ -144,6 +149,32 @@ public class PurchaseRecord implements java.io.Serializable{
 		this.purchaseDay = purchaseDay;
 	}
 
+	public java.lang.Integer getPurchaseStatus() {
+		return purchaseStatus;
+	}
+
+	public void setPurchaseStatus(java.lang.Integer purchaseStatus) {
+		this.purchaseStatus = purchaseStatus;
+	}
+
+	
+	public java.lang.Long getFactoryId() {
+		return factoryId;
+	}
+
+	public void setFactoryId(java.lang.Long factoryId) {
+		this.factoryId = factoryId;
+	}
+
+	
+	public java.lang.String getRemain() {
+		return remain;
+	}
+
+	public void setRemain(java.lang.String remain) {
+		this.remain = remain;
+	}
+
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Id",getId())
@@ -183,6 +214,23 @@ public class PurchaseRecord implements java.io.Serializable{
 		if (null != this.goodsId && this.goodsId !=0) {
 			IGoodsService goodsService = (IGoodsService)ApplicationContextHolder.getBean("goodsService");
 			return goodsService.queryGoodsById(this.goodsId);
+		}
+		return null;
+		
+	}
+	/**
+	 * @Description: 查询厂家
+	 * @author wgf
+	 * @date 2014-10-13上午10:24:42
+	 * @param @return   
+	 * @return Goods  
+	 * @throws
+	 */
+	@Transient
+	public FactoryInfo getFactoryInfo(){
+		if (null != this.factoryId && this.factoryId !=0) {
+			IFactoryInfoService factoryInfoService = (IFactoryInfoService)ApplicationContextHolder.getBean("factoryInfoService");
+			return factoryInfoService.queryFactoryInfoById(factoryId);
 		}
 		return null;
 		

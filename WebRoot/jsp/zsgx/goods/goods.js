@@ -116,8 +116,8 @@ function goods_purchase(id) {
 		title : "进货",
 		name : "zsgx_goods_edit_window",
 		url : basePath+"zsgx/goods!toGoodsPurchase.action?goods.id="+id,
-		width : 400,
-		height : 200,
+		width : 600,
+		height : 400,
 		onok : function(item, dialog){
 			gg("zsgx_goods_edit_window").contentWindow.goods_edit_submit(dialog);
 		}
